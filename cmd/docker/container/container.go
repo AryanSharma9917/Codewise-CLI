@@ -10,6 +10,7 @@ var (
 	runningContainer = []string{}
 )
 
+// containerCmd contains the container command
 var ContainerCmd = &cobra.Command{
 	Use:   "container [command] [flag]",
 	Short: "container related commands",
