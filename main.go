@@ -1,5 +1,5 @@
 /*
-	Copyright © 2023 Pradumna Saraf <pradumnasaraf@gmail.com>.
+	Copyright © 2023 Aryan Sharma <sharmaaryan9837@gmail.com>.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

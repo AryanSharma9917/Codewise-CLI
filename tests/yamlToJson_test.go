@@ -10,7 +10,7 @@ import (
 func TestYamlToJsonCmd(t *testing.T) {
 
 	// Execute the yamlToJson command
-	cmd := exec.Command("candy", "YTJ", "-f", "testdata/YTJ.yaml")
+	cmd := exec.Command("Codewise-CLI", "YTJ", "-f", "testdata/YTJ.yaml")
 
 	// Capture the output
 	output, err := cmd.CombinedOutput()
@@ -41,7 +41,7 @@ func TestYamlToJsonCmd(t *testing.T) {
 func TestYamlToJsonCmdWithOutputFlag(t *testing.T) {
 
 	// Execute the yamlToJson command
-	cmd := exec.Command("candy", "YTJ", "-f", "testdata/YTJ.yaml", "-o", "YTJ_output.json")
+	cmd := exec.Command("Codewise-CLI", "YTJ", "-f", "testdata/YTJ.yaml", "-o", "YTJ_output.json")
 
 	// Capture the output
 	output, err := cmd.CombinedOutput()

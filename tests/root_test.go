@@ -6,11 +6,11 @@ import (
 	"testing"
 )
 
-// TestRootCmd tests the root command (candy)
+// TestRootCmd tests the root command (Codewise-CLI)
 func TestRootCmd(t *testing.T) {
 
 	expectedOutput := "Do all your tedious tasks with a single command"
-	cmd := exec.Command("candy")
+	cmd := exec.Command("Codewise-CLI")
 
 	// Capture the output
 	output, err := cmd.CombinedOutput()
@@ -26,11 +26,11 @@ func TestRootCmd(t *testing.T) {
 
 }
 
-// TestRootCmdHelpFlag tests the root command (candy) with help flag
+// TestRootCmdHelpFlag tests the root command (Codewise-CLI) with help flag
 func TestRootCmdHelpFlag(t *testing.T) {
 
 	expectedOutput := "Do all your tedious tasks with a single command"
-	cmd := exec.Command("candy", "--help")
+	cmd := exec.Command("Codewise-CLI", "--help")
 
 	// Capture the output
 	output, err := cmd.CombinedOutput()

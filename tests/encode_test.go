@@ -11,7 +11,7 @@ import (
 func TestEncodeCmd(t *testing.T) {
 
 	stringToEncode := "password"
-	cmd := exec.Command("candy", "encode", stringToEncode)
+	cmd := exec.Command("Codewise-CLI", "encode", stringToEncode)
 
 	// Capture the output
 	output, err := cmd.CombinedOutput()
@@ -31,7 +31,7 @@ func TestEncodeCmd(t *testing.T) {
 func TestEncodeCmdWithDecodeFlag(t *testing.T) {
 
 	stringToDecode := "cGFzc3dvcmQ="
-	cmd := exec.Command("candy", "encode", "-d", stringToDecode)
+	cmd := exec.Command("Codewise-CLI", "encode", "-d", stringToDecode)
 
 	// Capture the output
 	output, err := cmd.CombinedOutput()

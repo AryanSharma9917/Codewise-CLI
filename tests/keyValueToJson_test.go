@@ -9,7 +9,7 @@ import (
 // TestKeyValueToJson tests the KVTJ command
 func TestKeyValueToJson(t *testing.T) {
 
-	cmd := exec.Command("candy", "KVTJ", "-f", "testdata/env")
+	cmd := exec.Command("Codewise-CLI", "KVTJ", "-f", "testdata/env")
 
 	// Capture the output
 	output, err := cmd.CombinedOutput()
@@ -45,7 +45,7 @@ func TestKeyValueToJsonWithPrint(t *testing.T) {
   "NODE_ENV": "development",
   "PORT": "3000"
 }`
-	cmd := exec.Command("candy", "KVTJ", "-f", "testdata/env", "-p")
+	cmd := exec.Command("Codewise-CLI", "KVTJ", "-f", "testdata/env", "-p")
 
 	// Capture the output
 	output, err := cmd.CombinedOutput()
@@ -65,7 +65,7 @@ func TestKeyValueToJsonWithPrint(t *testing.T) {
 // TestKeyValueToJson tests the KVTJ command with output flag.
 func TestKeyValueToJsonWithOutputFlag(t *testing.T) {
 
-	cmd := exec.Command("candy", "KVTJ", "-f", "testdata/env", "-o", "KVTJ_output.json")
+	cmd := exec.Command("Codewise-CLI", "KVTJ", "-f", "testdata/env", "-o", "KVTJ_output.json")
 
 	// Capture the output
 	output, err := cmd.CombinedOutput()

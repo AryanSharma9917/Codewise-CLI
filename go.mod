@@ -1,4 +1,4 @@
-module github.com/Pradumnasaraf/candy
+module github.com/aryansharma9917/Codewise-CLI
 
 go 1.20
 

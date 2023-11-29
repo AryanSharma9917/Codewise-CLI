@@ -4,14 +4,14 @@ import (
 	"log"
 	"os"
 
-	"github.com/Pradumnasaraf/candy/cmd/docker"
-	"github.com/Pradumnasaraf/candy/cmd/kubernetes"
+	"github.com/aryansharma9917/Codewise-CLI/cmd/docker"
+	"github.com/aryansharma9917/Codewise-CLI/cmd/kubernetes"
 	"github.com/spf13/cobra"
 )
 
-// rootCmd is the root command for candy
+// rootCmd is the root command for Codewise-CLI
 var rootCmd = &cobra.Command{
-	Use:   "candy [command]",
+	Use:   "Codewise-CLI [command]",
 	Short: "Do all your tedious tasks with a single command",
 	Run: func(cmd *cobra.Command, args []string) {
 		err := cmd.Help()

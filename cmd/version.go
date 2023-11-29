@@ -13,8 +13,8 @@ var (
 
 const (
 	CLI_VERSION = "1.7.0"
-	OWNER       = "Pradumnasaraf"
-	REPO        = "candy"
+	OWNER       = "AryanSharma"
+	REPO        = "Codewise-CLI"
 )
 
 // versionCmd represents the version command
@@ -48,11 +48,11 @@ func checkForNewVersion() {
 	}
 
 	if res.Outdated {
-		fmt.Printf("The latest version of candy is %s.\nPlease update to the latest version by running go get -u github.com/Pradumnasaraf/candy@latest", res.Current)
+		fmt.Printf("The latest version of Codewise-CLI is %s.\nPlease update to the latest version by running go get -u github.com/aryansharma9917/Codewise-CLI@latest", res.Current)
 		return
 	}
 
-	fmt.Println("You are using the latest version of candy")
+	fmt.Println("You are using the latest version of Codewise-CLI")
 
 }
 

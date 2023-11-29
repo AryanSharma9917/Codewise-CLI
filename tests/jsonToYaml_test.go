@@ -9,7 +9,7 @@ import (
 // TestJsonToYamlCmd tests the JTY command
 func TestJsonToYamlCmd(t *testing.T) {
 
-	cmd := exec.Command("candy", "JTY", "-f", "testdata/JTY.json")
+	cmd := exec.Command("Codewise-CLI", "JTY", "-f", "testdata/JTY.json")
 
 	// Capture the output
 	output, err := cmd.CombinedOutput()
@@ -39,7 +39,7 @@ func TestJsonToYamlCmd(t *testing.T) {
 // TestJsonToYamlCmdWithOutputFlag tests the JTY command with the output flag
 func TestJsonToYamlCmdWithOutputFlag(t *testing.T) {
 
-	cmd := exec.Command("candy", "JTY", "-f", "testdata/JTY.json", "-o", "JTY_output.yaml")
+	cmd := exec.Command("Codewise-CLI", "JTY", "-f", "testdata/JTY.json", "-o", "JTY_output.yaml")
 
 	// Capture the output
 	output, err := cmd.CombinedOutput()

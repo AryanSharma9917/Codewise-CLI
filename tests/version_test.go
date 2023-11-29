@@ -10,7 +10,7 @@ import (
 func TestVersionCmd(t *testing.T) {
 
 	expectedOutput := "1."
-	cmd := exec.Command("candy", "version")
+	cmd := exec.Command("Codewise-CLI", "version")
 
 	// Capture the output
 	output, err := cmd.CombinedOutput()
