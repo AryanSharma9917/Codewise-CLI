@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "github.com/AryanSharma9917/Codewise-CLI/cmd"
+import "github.com/AryanSharma9917/Codewise-CLI/tree/main/cmd"
 
 func main() {
 	cmd.Execute()
