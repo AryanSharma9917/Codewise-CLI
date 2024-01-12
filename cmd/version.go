@@ -48,7 +48,7 @@ func checkForNewVersion() {
 	}
 
 	if res.Outdated {
-		fmt.Printf("The latest version of Codewise-CLI is %s.\nPlease update to the latest version by running go get -u github.com/aryansharma9917/Codewise-CLI@latest", res.Current)
+		fmt.Printf("The latest version of Codewise-CLI is %s.\nPlease update to the latest version by running go get -u github.com/AryanSharma9917/Codewise-CLI@latest", res.Current)
 		return
 	}
 

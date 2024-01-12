@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/aryansharma9917/Codewise-CLI/cmd/docker"
-	"github.com/aryansharma9917/Codewise-CLI/cmd/kubernetes"
+	"github.com/AryanSharma9917/Codewise-CLI/cmd/docker"
+	"github.com/AryanSharma9917/Codewise-CLI/cmd/kubernetes"
 	"github.com/spf13/cobra"
 )
 

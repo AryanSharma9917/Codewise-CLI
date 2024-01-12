@@ -1,4 +1,4 @@
-module github.com/aryansharma9917/Codewise-CLI
+module github.com/AryanSharma9917/Codewise-CLI
 
 go 1.19
 
