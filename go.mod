@@ -1,6 +1,6 @@
 module github.com/aryansharma9917/Codewise-CLI
 
-go 1.19
+go 1.20
 
 require (
 	github.com/docker/docker v24.0.2+incompatible
