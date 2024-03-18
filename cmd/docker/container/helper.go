@@ -17,8 +17,8 @@ func dockerClient() (context.Context, *client.Client) {
 	return ctx, cli
 }
 
-// runnnigContainerList returns a list of running containers
-func runnnigContainerList(cli *client.Client, ctx context.Context) []types.Container {
+// runningContainerList returns a list of running containers
+func runningContainerList(cli *client.Client, ctx context.Context) []types.Container {
 
 	containerList, err := cli.ContainerList(ctx, types.ContainerListOptions{})
 	checkErr(err)

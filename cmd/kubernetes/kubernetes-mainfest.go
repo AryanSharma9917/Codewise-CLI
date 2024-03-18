@@ -18,26 +18,26 @@ var kubernetesManifestCmd = &cobra.Command{
 	Short: "Generates manifest file for different objects.",
 	Run: func(cmd *cobra.Command, args []string) {
 
-		k8Obj = strings.ToLower(k8Obj)
+		k80bj = strings.ToLower(k80bj)
 		switch {
-		case k8Obj == "deployment":
+		case k80bj == "deployment":
 			createManifestFile("deployment.yaml", deployment)
-		case k8Obj == "pod":
+		case k80bj == "pod":
 			createManifestFile("pod.yaml", pod)
-		case k8Obj == "service":
+		case k80bj == "service":
 			createManifestFile("service.yaml", service)
-		case k8Obj == "ingress":
+		case k80bj == "ingress":
 			createManifestFile("ingress.yaml", ingress)
-		case k8Obj == "secret":
+		case k80bj == "secret":
 			createManifestFile("secret.yaml", secret)
-		case k8Obj == "configmap":
+		case k80bj == "configmap":
 			createManifestFile("configmap.yaml", configmap)
-		case k8Obj == "persistentvolume" || k8Obj == "pv":
+		case k80bj == "persistentvolume" || k80bj == "pv":
 			createManifestFile("persistentvolume.yaml", pv)
-		case k8Obj == "persistentvolumeclaim" || k8Obj == "pvc":
+		case k80bj == "persistentvolumeclaim" || k80bj == "pvc":
 			createManifestFile("persistentvolumeclaim.yaml", pvc)
 		default:
-			log.Print("Currently we don't support manifest generation for " + k8Obj + ".")
+			log.Print("Currently we don't support manifest generation for " + k80bj + ".")
 		}
 	}}
 
@@ -54,7 +54,7 @@ func createManifestFile(filename string, obj string) {
 }
 
 func init() {
-	kubernetesManifestCmd.Flags().StringVarP(&k8Obj, "obj", "o", "", "Kubernetes object to generate manifest for.")
+	kubernetesManifestCmd.Flags().StringVarP(&k80bj, "obj", "o", "", "Kubernetes object to generate manifest for.")
 	err := kubernetesManifestCmd.MarkFlagRequired("obj")
 	checkNilErr(err)
 

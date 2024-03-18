@@ -1,7 +1,7 @@
 package docker
 
 import (
-	"github.com/AryanSharma9917/Codewise-CLI/cmd/docker/container"
+	"github.com/aryansharma9917/Codewise-CLI/cmd/docker/container"
 	"github.com/spf13/cobra"
 )
 

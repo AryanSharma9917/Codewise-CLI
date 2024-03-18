@@ -21,7 +21,7 @@ var renameCmd = &cobra.Command{
 
 func renameContainer() {
 	ctx, cli := dockerClient()
-	containerList := runnnigContainerList(cli, ctx)
+	containerList := runningContainerList(cli, ctx)
 
 	if len(containerList) == 0 {
 		fmt.Println("No container running")
@@ -29,7 +29,7 @@ func renameContainer() {
 	}
 
 	for _, container := range containerList {
-		runnnigContainer = append(runnnigContainer, container.Names[0][1:]+" - "+container.ID[:6])
+		runningContainer = append(runningContainer, container.Names[0][1:]+" - "+container.ID[:6])
 
 	}
 
@@ -37,7 +37,7 @@ func renameContainer() {
 	fmt.Println("CONTAINER NAME - CONTAINER ID")
 	prompt := promptui.Select{
 		Label: "Select a container to rename",
-		Items: runnnigContainer,
+		Items: runningContainer,
 	}
 
 	_, result, err := prompt.Run()

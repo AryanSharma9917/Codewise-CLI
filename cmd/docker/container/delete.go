@@ -25,7 +25,7 @@ var deleteContainerCmd = &cobra.Command{
 
 func deleteContainer() {
 	ctx, cli := dockerClient()
-	containerList := runnnigContainerList(cli, ctx)
+	containerList := runningContainerList(cli, ctx)
 
 	if len(containerList) == 0 {
 		fmt.Println("No container running")
@@ -62,13 +62,13 @@ func deleteContainer() {
 
 	// If the flag --all is not set, delete a specific container
 	for _, container := range containerList {
-		runnnigContainer = append(runnnigContainer, container.Names[0][1:]+" - "+container.ID[:6])
+		runningContainer = append(runningContainer, container.Names[0][1:]+" - "+container.ID[:6])
 
 	}
 
 	prompt := promptui.Select{
 		Label: "Select a containe to delete",
-		Items: runnnigContainer,
+		Items: runningContainer,
 	}
 
 	_, conSelection, err := prompt.Run()
