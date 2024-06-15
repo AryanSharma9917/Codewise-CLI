@@ -8,7 +8,7 @@ import (
 
 // TestKeyValueToJson tests the KVTJ command
 func TestKeyValueToJson(t *testing.T) {
-
+	// Run the Codewise-CLI command
 	cmd := exec.Command("Codewise-CLI", "KVTJ", "-f", "testdata/env")
 
 	// Capture the output
@@ -17,7 +17,10 @@ func TestKeyValueToJson(t *testing.T) {
 		t.Errorf("expected no error, but got: %v", err)
 	}
 
-	// Validate the cli output
+	// Print the output for debugging
+	t.Logf("CLI Output: %s", output)
+
+	// Validate the CLI output
 	expectedOutput := "Operation completed successfully. Check the output.json file."
 	got := strings.TrimSpace(string(output))
 	if got != expectedOutput {
@@ -28,12 +31,11 @@ func TestKeyValueToJson(t *testing.T) {
 	cmd = exec.Command("diff", "testdata/env_output.json", "output.json")
 	output, err = cmd.CombinedOutput()
 	if err != nil {
-		t.Errorf("Error comparing output.json and testdata/test.json")
+		t.Errorf("Error comparing output.json and testdata/env_output.json: %s", output)
 	}
 	if string(output) != "" {
-		t.Errorf("Expected output.json and testdata/test.json to be the same, but got error")
+		t.Errorf("Expected output.json and testdata/env_output.json to be the same, but got error: %s", output)
 	}
-
 }
 
 // TestKeyValueToJson tests the KVTJ command with print flag.

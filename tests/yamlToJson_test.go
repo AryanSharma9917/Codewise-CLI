@@ -1,9 +1,13 @@
 package test
 
 import (
+	"encoding/json"
+	"io/ioutil"
 	"os/exec"
 	"strings"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 // TestYamlToJsonCmd tests the YTJ command
@@ -25,16 +29,31 @@ func TestYamlToJsonCmd(t *testing.T) {
 		t.Errorf("expected %v, but got: %v", expectedOutput, got)
 	}
 
-	// Validate the output file with a new
-	cmd = exec.Command("diff", "testdata/YTJ_output.json", "output.json")
-	output, err = cmd.CombinedOutput()
+	// Read the actual output JSON file
+	actualJSON, err := ioutil.ReadFile("output.json")
 	if err != nil {
-		t.Errorf("Error comparing output.json and testdata/test.json")
-	}
-	if string(output) != "" {
-		t.Errorf("Expected output.json and testdata/test.json to be the same, but got error")
+		t.Fatalf("could not read output.json: %v", err)
 	}
 
+	// Read the expected JSON file
+	expectedJSON, err := ioutil.ReadFile("testdata/YTJ_output.json")
+	if err != nil {
+		t.Fatalf("could not read testdata/YTJ_output.json: %v", err)
+	}
+
+	// Unmarshal JSON files
+	var actual, expected map[string]interface{}
+	if err := json.Unmarshal(actualJSON, &actual); err != nil {
+		t.Fatalf("could not unmarshal actual JSON: %v", err)
+	}
+	if err := json.Unmarshal(expectedJSON, &expected); err != nil {
+		t.Fatalf("could not unmarshal expected JSON: %v", err)
+	}
+
+	// Compare JSON files
+	if diff := cmp.Diff(expected, actual); diff != "" {
+		t.Errorf("Mismatch (-expected +actual):\n%s", diff)
+	}
 }
 
 // TestYamlToJsonCmdWithOutputFlag tests the YTJ command with the output flag
@@ -56,14 +75,29 @@ func TestYamlToJsonCmdWithOutputFlag(t *testing.T) {
 		t.Errorf("expected %v, but got: %v", expectedOutput, got)
 	}
 
-	// Validate the output file with a new
-	cmd = exec.Command("diff", "testdata/YTJ_output.json", "YTJ_output.json")
-	output, err = cmd.CombinedOutput()
+	// Read the actual output JSON file
+	actualJSON, err := ioutil.ReadFile("YTJ_output.json")
 	if err != nil {
-		t.Errorf("Error comparing YTJ_output.json and testdata/test.json")
-	}
-	if string(output) != "" {
-		t.Errorf("Expected YTJ_output.json and testdata/test.json to be the same, but got error")
+		t.Fatalf("could not read YTJ_output.json: %v", err)
 	}
 
+	// Read the expected JSON file
+	expectedJSON, err := ioutil.ReadFile("testdata/YTJ_output.json")
+	if err != nil {
+		t.Fatalf("could not read testdata/YTJ_output.json: %v", err)
+	}
+
+	// Unmarshal JSON files
+	var actual, expected map[string]interface{}
+	if err := json.Unmarshal(actualJSON, &actual); err != nil {
+		t.Fatalf("could not unmarshal actual JSON: %v", err)
+	}
+	if err := json.Unmarshal(expectedJSON, &expected); err != nil {
+		t.Fatalf("could not unmarshal expected JSON: %v", err)
+	}
+
+	// Compare JSON files
+	if diff := cmp.Diff(expected, actual); diff != "" {
+		t.Errorf("Mismatch (-expected +actual):\n%s", diff)
+	}
 }
