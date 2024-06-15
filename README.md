@@ -12,7 +12,7 @@
 To install the Codewise-CLI, use the command `go install github.com/AryanSharma9917/Codewise-CLI@latest`.
 Go will automatically install it in your `$GOPATH/bin` directory, which should be in your `$PATH`.
 
-Once installed, you can use the `codewise-CLI` CLI command. To confirm installation, type `codewise-cli` at the command line.
+Once installed, you can use the `Codewise-CLI` CLI command. To confirm installation, type `Codewise-CLI` at the command line.
 
 > **Note** If you are getting an error like `command not found: Codewise-CLI`, then you need to add `$GOPATH/bin` to your `$PATH` environment variable.
 
