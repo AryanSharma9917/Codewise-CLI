@@ -3,7 +3,6 @@
 <div align="center">
 
 
-[![Releases](https://github.com/aryansharma9917/Codewise-CLI/actions/workflows/releases.yml/badge.svg)](https://github.com/aryansharma9917/Codewise-CLI/actions/workflows/releases.yml) [![Go Reference](https://pkg.go.dev/github.com/aryansharma9917/Codewise-CLI)]
 
 </div>
 
