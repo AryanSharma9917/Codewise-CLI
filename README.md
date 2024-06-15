@@ -2,6 +2,7 @@
 
 <div align="center">
 
+![Codewise-CLI logo](https://github.com/AryanSharma9917/Codewise-CLI/assets/72792907/f38f8d06-9533-4de2-b044-494d5fdb0bd9)
 
 
 </div>
