@@ -18,7 +18,7 @@ Once installed, you can use the `Codewise-CLI` CLI command. To confirm installat
 
 ## 📚 Documentation
 
-**Check out detailed documentation for getting started and using Codewise CLI** [**here**](https://docs-two-eosin.vercel.app/#/).
+**Check out detailed documentation for getting started and using Codewise CLI** [**here**](https://gist.github.com/AryanSharma9917/a93356bb49a7269826976d7f8d89f11a).
 
 ## ⭐️ Features
 
@@ -46,7 +46,7 @@ Available Commands:
   k8s         Kubernetes related commands. Like generating manifest files for kubernetes objects.
 ```
 
-For detailed usage of each command, visit [here](https://pkg.go.dev/github.com/aryansharma9917/Codewise-CLI)
+For detailed usage of each command, visit [here](https://docs-two-eosin.vercel.app/#/)
 
 Eg `Codewise-CLI JTY --file test.json` with convert JSON into YAML and create a `output.yaml` in your current directory.
 
