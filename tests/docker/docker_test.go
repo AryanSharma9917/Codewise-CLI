@@ -12,7 +12,7 @@ func TestDockerCmd(t *testing.T) {
 	expectedOutput := "Docker related commands."
 	cmd := exec.Command("Codewise-CLI", "docker")
 
-	// Capture the output
+	// Capture the output for redention
 	output, err := cmd.CombinedOutput()
 	if err != nil {
 		t.Errorf("expected no error, but got: %v", err)
