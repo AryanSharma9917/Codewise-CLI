@@ -7,7 +7,7 @@
 
 </div>
 
-**Codewise** is a CLI tool that provides a basic set of commands to perform tedious tasks such as converting **YAML to JSON** or **JSON to YAML** directly from your terminal. It's built with [Go](https://github.com/golang/go), [Cobra](https://github.com/spf13/cobra), [Viper](https://github.com/spf13/viper), etc.
+**Codewise** is a CLI tool that provides a basic set of commands to perform tedious tasks such as converting **YAML to JSON** or **JSON to YAML** directly from your terminal. It's built with [GoLang](https://github.com/golang/go), [Cobra](https://github.com/spf13/cobra), [Viper](https://github.com/spf13/viper), etc.
  
 To install the Codewise-CLI, use the command `go install github.com/aryansharma9917/Codewise-CLI@latest`.
 Go will automatically install it in your `$GOPATH/bin` directory, which should be in your `$PATH`.
