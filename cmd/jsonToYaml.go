@@ -17,35 +17,37 @@ var jsonToYamlCmd = &cobra.Command{
 	Use:   "JTY [flags]",
 	Short: "Converts a JSON into YAML.",
 	Run: func(cmd *cobra.Command, args []string) {
-
-		// Read the JSON file
-		vp := viper.New()
-		vp.SetConfigFile(inputJsonFile)
-		err := vp.ReadInConfig()
-		checkNilErr(err)
-
-		// Write the YAML file
-		if outputYamlFile == "" {
-			outputYamlFile = "output.yaml"
-		}
-		vp.SetConfigFile(outputYamlFile)
-
-		err = vp.WriteConfig()
-		checkNilErr(err)
-
-		if outputYamlFile == "" {
-			fmt.Println("Operation completed successfully. Check the output.yaml file.")
-		} else {
-			fmt.Println("Operation completed successfully. Check the " + outputYamlFile + " file.")
-		}
+		convertJsonToYaml()
 	},
 }
 
+// init initializes flags and sets required parameters
 func init() {
-
 	// Flags for the JYT command
 	jsonToYamlCmd.Flags().StringVarP(&outputYamlFile, "output", "o", "", "Output YAML file name (default is output.yaml)")
-	jsonToYamlCmd.Flags().StringVarP(&inputJsonFile, "file", "f", "", "Input the JSON file name")
+	jsonToYamlCmd.Flags().StringVarP(&inputJsonFile, "file", "f", "", "Input JSON file name")
 	err := jsonToYamlCmd.MarkFlagRequired("file")
 	checkNilErr(err)
+}
+
+// convertJsonToYaml handles the JSON to YAML conversion
+func convertJsonToYaml() {
+	// Initialize viper and read the JSON file
+	vp := viper.New()
+	vp.SetConfigFile(inputJsonFile)
+	err := vp.ReadInConfig()
+	checkNilErr(err)
+
+	// Set output file to default if not provided
+	if outputYamlFile == "" {
+		outputYamlFile = "output.yaml"
+	}
+	vp.SetConfigFile(outputYamlFile)
+
+	// Write the YAML file
+	err = vp.WriteConfig()
+	checkNilErr(err)
+
+	// Output completion message
+	fmt.Printf("Operation completed successfully. Check the %s file.\n", outputYamlFile)
 }
