@@ -16,7 +16,7 @@ Once installed, you can use the `Codewise-CLI` CLI command. To confirm installat
 
 > **Note** If you are getting an error like `command not found: Codewise-CLI`, then you need to add `$GOPATH/bin` to your `$PATH` environment variable.
 
-## 📚 Documentation
+## 📚 Documentation:
 
 **Check out detailed documentation for getting started and using Codewise CLI** [**here**](https://gist.github.com/AryanSharma9917/a93356bb49a7269826976d7f8d89f11a).
 
