@@ -20,7 +20,7 @@ Once installed, you can use the `Codewise-CLI` CLI command. To confirm installat
 
 **Check out detailed documentation for getting started and using Codewise CLI** [**here**](https://gist.github.com/AryanSharma9917/a93356bb49a7269826976d7f8d89f11a).
 
-## ⭐️ Features
+## ⭐️ Features:
 
 - Convert JSON file to YAML
 - Convert YAML file to JSON
