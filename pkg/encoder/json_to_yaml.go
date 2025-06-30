@@ -1,4 +1,4 @@
-package cmd
+package encoder
 
 import (
 	"fmt"
@@ -50,4 +50,10 @@ func convertJsonToYaml() {
 
 	// Output completion message
 	fmt.Printf("Operation completed successfully. Check the %s file.\n", outputYamlFile)
+}
+
+func checkNilErr(err error) {
+	if err != nil {
+		panic(err)
+	}
 }

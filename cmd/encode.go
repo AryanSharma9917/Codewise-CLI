@@ -1,35 +1,25 @@
 package cmd
 
 import (
-	"encoding/base64"
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
-)
-
-var (
-	isDecode bool
+	"github.com/aryansharma9917/Codewise-CLI/pkg/encoder"
 )
 
 var encodeCmd = &cobra.Command{
-	Use:   "encode [string to encode]",
-	Short: "it encodes and decodes a string to base64 and vice versa",
-	Args:  cobra.ExactArgs(1),
+	Use:   "encode",
+	Short: "Convert YAML to JSON",
 	Run: func(cmd *cobra.Command, args []string) {
-		stringToEncode := args[0]
-
-		if isDecode {
-			decoded, err := base64.StdEncoding.DecodeString(stringToEncode)
-			checkNilErr(err)
-			fmt.Println(string(decoded))
-			return
+		if err := encoder.YAMLToJSON("input.yaml", "output.json"); err != nil {
+			fmt.Println("Error:", err)
+			os.Exit(1)
 		}
-
-		encoded := base64.StdEncoding.EncodeToString([]byte(stringToEncode))
-		fmt.Println(encoded)
+		fmt.Println("✅ YAML converted to JSON successfully.")
 	},
 }
 
 func init() {
-	encodeCmd.Flags().BoolVarP(&isDecode, "decode", "d", false, "Decode the string")
+	rootCmd.AddCommand(encodeCmd)
 }

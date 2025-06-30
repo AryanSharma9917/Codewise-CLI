@@ -1,4 +1,4 @@
-package cmd
+package encoder
 
 import (
 	"encoding/json"
@@ -104,3 +104,9 @@ func init() {
 	keyValueToJsonCmd.Flags().StringVarP(&outputJsonFile1, "output", "o", "", "Output JSON file name (default is output.json)")
 	keyValueToJsonCmd.Flags().BoolVarP(&printOutput, "print", "p", false, "Print the output to the console")
 }
+
+// func checkNilErr(err error) {
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// }

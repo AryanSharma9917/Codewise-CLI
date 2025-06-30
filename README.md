@@ -18,7 +18,7 @@ Once installed, you can use the `Codewise-CLI` CLI command. To confirm installat
 
 ## 📚 Documentation:
 
-**Check out detailed documentation for getting started and using Codewise CLI** [**here**](https://gist.github.com/AryanSharma9917/a93356bb49a7269826976d7f8d89f11a).
+**Check out detailed documentation for getting started and using Codewise CLI** [**here**](https://gist.github.com/aryansharma9917/a93356bb49a7269826976d7f8d89f11a).
 
 ## ⭐️ Features:
 
