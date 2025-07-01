@@ -52,6 +52,8 @@ func convertJsonToYaml() {
 	fmt.Printf("Operation completed successfully. Check the %s file.\n", outputYamlFile)
 }
 
+//  Declaration of checkNilErr function to handle errors
+// checkNilErr checks if the error is nil and panics if it is not
 func checkNilErr(err error) {
 	if err != nil {
 		panic(err)
