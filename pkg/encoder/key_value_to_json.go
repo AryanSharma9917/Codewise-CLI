@@ -105,8 +105,8 @@ func init() {
 	keyValueToJsonCmd.Flags().BoolVarP(&printOutput, "print", "p", false, "Print the output to the console")
 }
 
-// func checkNilErr(err error) {
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// }
+func checkNilErr(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
