@@ -1,4 +1,4 @@
-name: Go Test
+name: Run Go Tests
 
 on:
   push:
@@ -11,16 +11,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.20'
+          go-version: 1.22.x
 
-      - name: Install dependencies
-        run: go mod tidy
+      - name: Build CLI Binary
+        run: go build -o codewise main.go
 
-      - name: Run tests
+      - name: Run Tests
         run: go test ./... -v
