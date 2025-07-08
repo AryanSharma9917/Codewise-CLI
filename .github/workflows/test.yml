@@ -1,27 +1,26 @@
-name: Go Test CI
+name: Go Test
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   test:
-    name: 🔍 Run Go Tests
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⬇️ Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: 🛠 Set up Go
+      - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: 1.20
+          go-version: '1.20'
 
-      - name: 📦 Install dependencies
+      - name: Install dependencies
         run: go mod tidy
 
-      - name: ✅ Run Unit Tests
-        run: go test ./tests/... -v
+      - name: Run tests
+        run: go test ./... -v
