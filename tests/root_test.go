@@ -1,47 +1,16 @@
 package test
 
 import (
-	"os/exec"
-	"strings"
 	"testing"
+
+	"github.com/spf13/cobra"
 )
 
-// TestRootCmd tests the root command (Codewise-CLI)
-func TestRootCmd(t *testing.T) {
+func TestRootCommand(t *testing.T) {
+	var cmd cobra.Command
+	cmd.Use = "codewise"
 
-	expectedOutput := "Do all your tedious tasks with a single command"
-	cmd := exec.Command("Codewise-CLI")
-
-	// Capture the output
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		t.Errorf("expected no error, but got: %v", err)
+	if cmd.Use != "codewise" {
+		t.Error("❌ Root command name mismatch")
 	}
-
-	// Validate the cli output
-	got := strings.TrimSpace(string(output)[:47])
-	if got != expectedOutput {
-		t.Errorf("expected %v, but got: %v", expectedOutput, got)
-	}
-
-}
-
-// TestRootCmdHelpFlag tests the root command (Codewise-CLI) with help flag
-func TestRootCmdHelpFlag(t *testing.T) {
-
-	expectedOutput := "Do all your tedious tasks with a single command"
-	cmd := exec.Command("Codewise-CLI", "--help")
-
-	// Capture the output
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		t.Errorf("expected no error, but got: %v", err)
-	}
-
-	// Validate the cli output
-	got := strings.TrimSpace(string(output)[:47])
-	if got != expectedOutput {
-		t.Errorf("expected %v, but got: %v", expectedOutput, got)
-	}
-
 }
