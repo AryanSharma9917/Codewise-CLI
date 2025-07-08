@@ -1,53 +1,85 @@
 package test
 
 import (
-	"encoding/base64"
-	"os/exec"
-	"strings"
+	"encoding/json"
+	"os"
 	"testing"
+
+	"github.com/aryansharma9917/Codewise-CLI/pkg/encoder"
 )
 
-// Test encode command
-func TestEncodeCmd(t *testing.T) {
-
-	stringToEncode := "password"
-	cmd := exec.Command("Codewise-CLI", "encode", stringToEncode)
-
-	// Capture the output
-	output, err := cmd.CombinedOutput()
+func createFile(t *testing.T, path string, content string) {
+	t.Helper()
+	err := os.WriteFile(path, []byte(content), 0644)
 	if err != nil {
-		t.Errorf("expected no error, but got: %v", err)
-	}
-
-	// Validate the output
-	expectedOutput := base64.StdEncoding.EncodeToString([]byte(stringToEncode))
-	got := strings.TrimSpace(string(output))
-	if got != expectedOutput {
-		t.Errorf("expected %v, but got: %v", expectedOutput, got)
+		t.Fatalf("Failed to create test file %s: %v", path, err)
 	}
 }
 
-// Test encode command with decode flag
-func TestEncodeCmdWithDecodeFlag(t *testing.T) {
+func deleteFile(path string) {
+	_ = os.Remove(path)
+}
 
-	stringToDecode := "cGFzc3dvcmQ="
-	cmd := exec.Command("Codewise-CLI", "encode", "-d", stringToDecode)
+func TestYAMLToJSON(t *testing.T) {
+	input := "testdata/sample.yaml"
+	output := "testdata/output.json"
 
-	// Capture the output
-	output, err := cmd.CombinedOutput()
+	createFile(t, input, `
+name: Codewise
+version: 1.0
+`)
+
+	defer deleteFile(input)
+	defer deleteFile(output)
+
+	err := encoder.YAMLToJSON(input, output)
 	if err != nil {
-		t.Errorf("expected no error, but got: %v", err)
+		t.Fatalf("YAML to JSON conversion failed: %v", err)
 	}
 
-	// Validate the output
-	expectedOutput, err := base64.StdEncoding.DecodeString(stringToDecode)
+	data, err := os.ReadFile(output)
 	if err != nil {
-		t.Errorf("expected no error, but got: %v", err)
+		t.Fatalf("Failed to read output file: %v", err)
 	}
 
-	got := strings.TrimSpace(string(output))
-	if got != string(expectedOutput) {
-		t.Errorf("expected %v, but got: %v", string(expectedOutput), got)
+	var result map[string]interface{}
+	if err := json.Unmarshal(data, &result); err != nil {
+		t.Fatalf("Output is not valid JSON: %v", err)
 	}
 
+	if result["name"] != "Codewise" {
+		t.Errorf("Expected name to be 'Codewise', got '%v'", result["name"])
+	}
+}
+
+func TestEnvToJSON(t *testing.T) {
+	input := "testdata/sample.env"
+	output := "testdata/env_output.json"
+
+	createFile(t, input, `
+APP_NAME=Codewise
+VERSION=1.0
+`)
+
+	defer deleteFile(input)
+	defer deleteFile(output)
+
+	err := encoder.EnvToJSON(input, output)
+	if err != nil {
+		t.Fatalf(".env to JSON conversion failed: %v", err)
+	}
+
+	data, err := os.ReadFile(output)
+	if err != nil {
+		t.Fatalf("Failed to read env output file: %v", err)
+	}
+
+	var result map[string]interface{}
+	if err := json.Unmarshal(data, &result); err != nil {
+		t.Fatalf("Output is not valid JSON: %v", err)
+	}
+
+	if result["APP_NAME"] != "Codewise" {
+		t.Errorf("Expected APP_NAME to be 'Codewise', got '%v'", result["APP_NAME"])
+	}
 }
