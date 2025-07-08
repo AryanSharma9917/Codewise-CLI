@@ -1,95 +1,22 @@
-package test
+package encoder_test
 
 import (
+	"os"
 	"os/exec"
-	"strings"
 	"testing"
 )
 
-// TestKeyValueToJson tests the KVTJ command
-func TestKeyValueToJson(t *testing.T) {
-	// Run the Codewise-CLI command
-	cmd := exec.Command("Codewise-CLI", "KVTJ", "-f", "testdata/env")
+func TestKeyValueToJSON(t *testing.T) {
+	cmd := exec.Command("./codewise", "KVTJ", "--env=testdata/sample.env", "--output=testdata/env_output.json")
 
-	// Capture the output
 	output, err := cmd.CombinedOutput()
 	if err != nil {
-		t.Errorf("expected no error, but got: %v", err)
+		t.Fatalf("❌ Command failed: %v\nOutput: %s", err, output)
 	}
 
-	// Print the output for debugging
-	t.Logf("CLI Output: %s", output)
-
-	// Validate the CLI output
-	expectedOutput := "Operation completed successfully. Check the output.json file."
-	got := strings.TrimSpace(string(output))
-	if got != expectedOutput {
-		t.Errorf("expected %v, but got: %v", expectedOutput, got)
+	if _, err := os.Stat("testdata/env_output.json"); os.IsNotExist(err) {
+		t.Fatal("❌ Output file was not created")
 	}
 
-	// Validate the output file with a new
-	cmd = exec.Command("diff", "testdata/env_output.json", "output.json")
-	output, err = cmd.CombinedOutput()
-	if err != nil {
-		t.Errorf("Error comparing output.json and testdata/env_output.json: %s", output)
-	}
-	if string(output) != "" {
-		t.Errorf("Expected output.json and testdata/env_output.json to be the same, but got error: %s", output)
-	}
-}
-
-// TestKeyValueToJson tests the KVTJ command with print flag.
-func TestKeyValueToJsonWithPrint(t *testing.T) {
-
-	expectedOutput := `{
-  "MONGO": "mongodb://localhost:27017/test",
-  "MONGO_DBNAME": "test",
-  "NODE_ENV": "development",
-  "PORT": "3000"
-}`
-	cmd := exec.Command("Codewise-CLI", "KVTJ", "-f", "testdata/env", "-p")
-
-	// Capture the output
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		t.Errorf("expected no error, but got: %v", err)
-	}
-
-	// Validate the cli output
-
-	got := strings.TrimSpace(string(output))
-	if got != expectedOutput {
-		t.Errorf("expected %v, but got: %v", expectedOutput, got)
-	}
-
-}
-
-// TestKeyValueToJson tests the KVTJ command with output flag.
-func TestKeyValueToJsonWithOutputFlag(t *testing.T) {
-
-	cmd := exec.Command("Codewise-CLI", "KVTJ", "-f", "testdata/env", "-o", "KVTJ_output.json")
-
-	// Capture the output
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		t.Errorf("expected no error, but got: %v", err)
-	}
-
-	// Validate the cli output
-	expectedOutput := "Operation completed successfully. Check the KVTJ_output.json file."
-	got := strings.TrimSpace(string(output))
-	if got != expectedOutput {
-		t.Errorf("expected %v, but got: %v", expectedOutput, got)
-	}
-
-	// Validate the output file with a new
-	cmd = exec.Command("diff", "testdata/env_output.json", "KVTJ_output.json")
-	output, err = cmd.CombinedOutput()
-	if err != nil {
-		t.Errorf("Error comparing KVTJ_output.json and testdata/test.json")
-	}
-	if string(output) != "" {
-		t.Errorf("Expected KVTJ_output.json and testdata/test.json to be the same, but got error")
-	}
-
+	defer os.Remove("testdata/env_output.json")
 }

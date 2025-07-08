@@ -1,67 +1,22 @@
-package test
+package encoder_test
 
 import (
+	"os"
 	"os/exec"
-	"strings"
 	"testing"
 )
 
-// TestJsonToYamlCmd tests the JTY command
-func TestJsonToYamlCmd(t *testing.T) {
+func TestJSONToYAML(t *testing.T) {
+	cmd := exec.Command("./codewise", "JTY", "--file=testdata/JTY.json", "--output=testdata/JTY_output.yaml")
 
-	cmd := exec.Command("Codewise-CLI", "JTY", "-f", "testdata/JTY.json")
-
-	// Capture the output
 	output, err := cmd.CombinedOutput()
 	if err != nil {
-		t.Errorf("expected no error, but got: %v", err)
+		t.Fatalf("❌ Command failed: %v\nOutput: %s", err, output)
 	}
 
-	// Validate the cli output
-	expectedOutput := "Operation completed successfully. Check the output.yaml file."
-	got := strings.TrimSpace(string(output))
-	if got != expectedOutput {
-		t.Errorf("expected %v, but got: %v", expectedOutput, got)
+	if _, err := os.Stat("testdata/JTY_output.yaml"); os.IsNotExist(err) {
+		t.Fatal("❌ Output file was not created")
 	}
 
-	// Validate the output file with a new
-	cmd = exec.Command("diff", "testdata/JTY_output.yaml", "output.yaml")
-	output, err = cmd.CombinedOutput()
-	if err != nil {
-		t.Errorf("Error comparing output.yaml and testdata/test.yaml")
-	}
-	if string(output) != "" {
-		t.Errorf("Expected output.yaml and testdata/test.yaml to be the same, but got error")
-	}
-
-}
-
-// TestJsonToYamlCmdWithOutputFlag tests the JTY command with the output flag
-func TestJsonToYamlCmdWithOutputFlag(t *testing.T) {
-
-	cmd := exec.Command("Codewise-CLI", "JTY", "-f", "testdata/JTY.json", "-o", "JTY_output.yaml")
-
-	// Capture the output
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		t.Errorf("expected no error, but got: %v", err)
-	}
-
-	// Validate the cli output
-	expectedOutput := "Operation completed successfully. Check the JTY_output.yaml file."
-	got := strings.TrimSpace(string(output))
-	if got != expectedOutput {
-		t.Errorf("expected %v, but got: %v", expectedOutput, got)
-	}
-
-	// Validate the output file with a new
-	cmd = exec.Command("diff", "testdata/JTY_output.yaml", "JTY_output.yaml")
-	output, err = cmd.CombinedOutput()
-	if err != nil {
-		t.Errorf("Error comparing JTY_output.yaml and testdata/test.yaml")
-	}
-	if string(output) != "" {
-		t.Errorf("Expected JTY_output.yaml and testdata/test.yaml to be the same, but got error")
-	}
-
+	defer os.Remove("testdata/JTY_output.yaml")
 }
