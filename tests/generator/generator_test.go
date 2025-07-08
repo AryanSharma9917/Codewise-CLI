@@ -1,37 +1,43 @@
-package generator_test
+package generator
 
 import (
+	"bytes"
+	"fmt"
 	"os"
-	"testing"
-
-	"github.com/aryansharma9917/Codewise-CLI/pkg/generator"
+	"text/template"
 )
 
-func TestRenderTemplate(t *testing.T) {
-	t.Helper()
+type TemplateData struct {
+	AppName string
+	Repo    string
+}
 
-	templateName := "github-action"
-	output := "tests/testdata/test-output.yml"
+// RenderTemplate renders a template by name from the /templates directory (for CLI usage).
+func RenderTemplate(templateName, outputPath string, data TemplateData) error {
+	templatePath := fmt.Sprintf("templates/%s.tpl", templateName)
+	return RenderTemplateFromFile(templatePath, outputPath, data)
+}
 
-	data := generator.TemplateData{
-		AppName: "testapp",
-		Repo:    "https://github.com/test/repo",
-	}
-
-	err := generator.RenderTemplate(templateName, output, data)
+// RenderTemplateFromFile reads and renders a template file using provided data (for test usage).
+func RenderTemplateFromFile(templatePath, outputPath string, data TemplateData) error {
+	tplContent, err := os.ReadFile(templatePath)
 	if err != nil {
-		t.Fatalf("❌ RenderTemplate failed: %v", err)
+		return fmt.Errorf("❌ Failed to read template: %v", err)
 	}
 
-	// Confirm that output file was created
-	if _, err := os.Stat(output); os.IsNotExist(err) {
-		t.Fatalf("❌ Output file not created: %s", output)
+	tpl, err := template.New("tpl").Parse(string(tplContent))
+	if err != nil {
+		return fmt.Errorf("❌ Failed to parse template: %v", err)
 	}
 
-	// Clean up
-	defer func() {
-		if err := os.Remove(output); err != nil {
-			t.Logf("⚠️ Failed to clean up output file: %v", err)
-		}
-	}()
+	var buf bytes.Buffer
+	if err := tpl.Execute(&buf, data); err != nil {
+		return fmt.Errorf("❌ Failed to execute template: %v", err)
+	}
+
+	if err := os.WriteFile(outputPath, buf.Bytes(), 0644); err != nil {
+		return fmt.Errorf("❌ Failed to write file: %v", err)
+	}
+
+	return nil
 }

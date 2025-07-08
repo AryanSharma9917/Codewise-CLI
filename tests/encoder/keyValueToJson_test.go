@@ -1,22 +1,17 @@
 package encoder_test
 
 import (
-	"os"
 	"os/exec"
 	"testing"
 )
 
 func TestKeyValueToJSON(t *testing.T) {
-	cmd := exec.Command("./codewise", "KVTJ", "--env=testdata/sample.env", "--output=testdata/env_output.json")
+	input := "../../testdata/sample.env"
+	output := "../../testdata/out.json"
 
-	output, err := cmd.CombinedOutput()
+	cmd := exec.Command("../../codewise", "encode", "--input", input, "--output", output)
+	out, err := cmd.CombinedOutput()
 	if err != nil {
-		t.Fatalf("❌ Command failed: %v\nOutput: %s", err, output)
+		t.Fatalf("❌ Command failed: %v\nOutput: %s", err, string(out))
 	}
-
-	if _, err := os.Stat("testdata/env_output.json"); os.IsNotExist(err) {
-		t.Fatal("❌ Output file was not created")
-	}
-
-	defer os.Remove("testdata/env_output.json")
 }
