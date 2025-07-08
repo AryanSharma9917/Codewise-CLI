@@ -1,0 +1,29 @@
+name: Codewise CLI - CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🔧 Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.22
+
+      - name: ⚙️ Install dependencies
+        run: go mod tidy
+
+      - name: 🛠️ Build binary
+        run: go build -o codewise main.go
+
+      - name: 🧪 Run tests
+        run: go test ./... -v
