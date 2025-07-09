@@ -7,30 +7,32 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var version string = "v1.1.0" 
-
 var rootCmd = &cobra.Command{
 	Use:   "codewise",
 	Short: "CLI that helps you scaffold, encode, validate, and automate DevOps workflows easily.",
-	Long: `Codewise is a CLI tool designed for DevOps and SREs to:
+	Long: `Codewise CLI v1.1.0
 
-- Convert between YAML, JSON, .env and base64
-- Generate GitHub Actions or ArgoCD templates
-- Scaffold new GitOps-ready projects with best practices`,
-	Run: func(cmd *cobra.Command, args []string) {
-		showVersion, _ := cmd.Flags().GetBool("version")
-		if showVersion {
-			fmt.Printf("Codewise CLI version: %s\n", version)
-			return
-		}
-		PrintBanner()
-		cmd.Help()
-	},
+This CLI helps you with common DevOps tasks like:
+- JSON/YAML conversions
+- Base64 encoding/decoding
+- Dockerfile and Kubernetes manifest generation
+- Project scaffolding and GitHub Actions template rendering
+`,
+	Version: "v1.1.0",
 }
 
-// PrintBanner displays an ASCII banner
+// Execute runs the root command.
+func Execute() {
+	PrintBanner()
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Println("❌", err)
+		os.Exit(1)
+	}
+}
+
+// PrintBanner prints the CLI banner.
 func PrintBanner() {
-	fmt.Println(`
+	fmt.Print(`
    ____          _       _           
   / ___|___   __| | ___ | |__  _   _ 
  | |   / _ \ / _  |/ _ \| '_ \| | | |
@@ -39,16 +41,4 @@ func PrintBanner() {
                                |___/ 
 Codewise CLI - Simplify your DevOps
 `)
-}
-
-func init() {
-	rootCmd.Flags().BoolP("version", "v", false, "Print the version")
-}
-
-// Execute is the entry point
-func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
 }
