@@ -1,34 +1,36 @@
-# Use an official Golang image as the base image for building the binary
-FROM golang:1.20-alpine AS builder
+# Stage 1: Build the Go binary
+FROM golang:1.22-alpine AS builder
 
-# Install git as it is needed for downloading some dependencies
-RUN apk add --no-cache git
-
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Copy go.mod and go.sum first to cache dependencies
+# Copy go mod and sum files
 COPY go.mod go.sum ./
-
-# Download dependencies
 RUN go mod download
 
-# Copy the rest of the source code
+# Copy source code
 COPY . .
 
-# Build the Go binary
-RUN go build -o Codewise-CLI ./main.go
+# Build the CLI binary
+RUN go build -o codewise main.go
 
-# Use a smaller base image for running the binary
-FROM alpine:3.18
+# Stage 2: Minimal runtime image
+FROM alpine:latest
 
-# Set up working directory
-WORKDIR /root/
+# Create a non-root user for better security (optional)
+RUN adduser -D appuser
 
-# Copy the binary from the builder stage
-COPY --from=builder /app/Codewise-CLI .
+# Set working directory
+WORKDIR /home/appuser
 
-# EXPOSE 8080
+# Copy the compiled binary from builder stage
+COPY --from=builder /app/codewise .
 
-# Run the binary
-ENTRYPOINT ["./Codewise-CLI"]
+# Set ownership (if using non-root user)
+RUN chown -R appuser .
+
+# Use non-root user
+USER appuser
+
+# Command to run the CLI
+ENTRYPOINT ["./codewise"]

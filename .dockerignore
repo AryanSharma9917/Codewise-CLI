@@ -1,0 +1,9 @@
+# Prevent unnecessary files from being copied into the image
+.git
+.github
+tests
+testdata
+*.md
+*.yml
+*.yaml
+.DS_Store
