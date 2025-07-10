@@ -1,63 +1,175 @@
-# Codewise
+# Codewise-CLI
 
 <div align="center">
-
-![Codewise-CLI logo](https://github.com/AryanSharma9917/Codewise-CLI/assets/72792907/f38f8d06-9533-4de2-b044-494d5fdb0bd9)
-
-
+  <img src="https://github.com/AryanSharma9917/Codewise-CLI/assets/72792907/f38f8d06-9533-4de2-b044-494d5fdb0bd9" alt="Codewise Logo" width="220"/>
 </div>
 
-**Codewise** is a CLI tool that provides a basic set of commands to perform tedious tasks such as converting **YAML to JSON** or **JSON to YAML** directly from your terminal. It's built with [GoLang](https://github.com/golang/go), [Cobra](https://github.com/spf13/cobra), [Viper](https://github.com/spf13/viper), etc.
- 
-To install the Codewise-CLI, use the command `go install github.com/aryansharma9917/Codewise-CLI@latest`.
-Go will automatically install it in your `$GOPATH/bin` directory, which should be in your `$PATH`
+Codewise is a powerful CLI tool that simplifies common DevOps tasks such as:
 
-Once installed, you can use the `Codewise-CLI` CLI command. To confirm installation, type `Codewise-CLI` at the command line interface.
+  * Encoding/decoding files
+  * JSON/YAML conversions
+  * Dockerfile generation
+  * Kubernetes manifest scaffolding
+  * Rendering templates with Go's `text/template` engine
 
-> **Note** If you are getting an error like `command not found: Codewise-CLI`, then you need to add `$GOPATH/bin` to your `$PATH` environment variable.
+-----
 
-## 📚 Documentation:
+## 🚀 Getting Started
 
-**Check out detailed documentation for getting started and using Codewise CLI** [**here**](https://gist.github.com/aryansharma9917/a93356bb49a7269826976d7f8d89f11a).
+### Clone the Repository
 
-## ⭐️ Features:
-
-- Convert JSON file to YAML
-- Convert YAML file to JSON
-- Convert Key-Value to JSON
-- Generate Dockerfile for different languages/framework
-- Generate Kubernetes manifests for different objects
-- Encode and Decode a string to base64
-- More coming soon...
-
-## 📝 Usage
-
-```
-Usage:
-  Codewise-CLI [command] [flags]
-  Codewise-CLI [command]
-
-Available Commands:
-  JTY         Converts a JSON into YAML.
-  KVTJ        Converts Key-Value (text) to JSON.
-  YTJ         Converts a YAML into JSON.
-  docker      Docker related commands. Like generating a Dockerfile for a language.
-  encode      It encodes and decodes a string to base64 and vice versa.
-  k8s         Kubernetes related commands. Like generating manifest files for kubernetes objects.
+```bash
+git clone https://github.com/aryansharma9917/Codewise-CLI.git
+cd Codewise-CLI
 ```
 
-Eg `Codewise-CLI JTY --file test.json` with convert JSON into YAML and create a `output.yaml` in your current directory.
+### Build the Binary
 
-Eg `Codewise-CLI docker dockerfile --lang go` to generate a `Dockerfile` template for go.
+```bash
+go build -o codewise main.go
+```
 
-eg `Codewise-CLI k8s manifest --obj deployment` to generate a `deployment.yaml` file with deployment template.
+### (Optional) Install Globally
 
-## 📜 License
+```bash
+sudo mv codewise /usr/local/bin/
+```
 
-This project is licensed under the Apache-2.0 license - see the [LICENSE](LICENSE) file for details.
+-----
 
-## 🛡 Security
+## Usage
 
-If you discover a security vulnerability within this project, please check the [SECURITY](SECURITY.md) for more information.
+```bash
+codewise <command> [flags]
+```
 
-WIP!
+-----
+
+## Commands & Examples
+
+### `encode` — Format Conversion & Encoding
+
+| Conversion Type | Description           | Example                                                                     |
+| :-------------- | :-------------------- | :-------------------------------------------------------------------------- |
+| `JTY`           | JSON to YAML          | `codewise encode --input input.json --output output.yaml --type JTY`      |
+| `YTJ`           | YAML to JSON          | `codewise encode --input input.yaml --output output.json --type YTJ`      |
+| `KVTJ`          | .env to JSON          | `codewise encode --input .env --output env.json --type KVTJ`              |
+| `B64E`          | Base64 Encode         | `codewise encode --input input.txt --output encoded.txt --type B64E`      |
+| `B64D`          | Base64 Decode         | `codewise encode --input encoded.txt --output decoded.txt --type B64D`    |
+
+### `generate` — Starter File Generators
+
+Generate a Dockerfile:
+
+```bash
+codewise generate dockerfile --output Dockerfile
+```
+
+Generate a Kubernetes manifest:
+
+```bash
+codewise generate k8s --output deployment.yaml
+```
+
+### `template` — Render Templated YAMLs
+
+Use Go `.tpl` template and `.yaml` values file to generate output YAML:
+
+```bash
+codewise template --template template.tpl --values values.yaml --output rendered.yaml
+```
+
+-----
+
+## 🐳 Docker Usage
+
+### 🔨 Build Docker Image
+
+```bash
+docker build -t aryansharma04/codewise-cli:latest .
+```
+
+### Run Using Docker
+
+```bash
+docker run --rm -v $(pwd):/app aryansharma04/codewise-cli:latest <command>
+```
+
+Example:
+
+```bash
+docker run --rm -v $(pwd):/app aryansharma04/codewise-cli:latest encode --input /app/input.json --output /app/output.yaml --type JTY
+```
+
+-----
+
+## ✅ Running Tests
+
+Make sure Go is installed:
+
+```bash
+go test ./... -v
+```
+
+Test coverage includes:
+
+  * ✅ JSON to YAML
+  * ✅ YAML to JSON
+  * ✅ ENV to JSON
+  * ✅ Base64 encode/decode
+  * ✅ Template rendering
+
+-----
+
+## 📁 Project Structure
+
+```bash
+.
+├── cmd/             # CLI command handlers
+├── pkg/
+│   ├── encoder/     # Encoding & conversion logic
+│   ├── generator/   # Project scaffolding logic
+│   └── validator/   # Future: Schema & config validation
+├── templates/       # Go template files
+├── tests/           # Unit tests
+├── testdata/        # Sample input files for testing
+├── Dockerfile
+├── Makefile
+├── go.mod
+├── main.go
+└── README.md
+```
+
+-----
+
+## 🤝 Contributing
+
+```bash
+# Fork and clone the repo
+git clone https://github.com/<your-username>/Codewise-CLI.git
+cd Codewise-CLI
+
+# Create a feature branch
+git checkout -b my-feature
+
+# Make changes and push
+git add .
+git commit -m "Add awesome feature"
+git push origin my-feature
+```
+
+Then open a Pull Request 🚀
+
+-----
+
+## 🛡 License
+
+Licensed under the MIT License. See `LICENSE` for more.
+
+-----
+
+## 📬 Author
+
+Aryan Sharma
+
+GitHub: [@aryansharma9917](https://www.google.com/search?q=https://github.com/aryansharma9917)
