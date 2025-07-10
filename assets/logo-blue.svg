@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+    <style>
+      .logo-text { font-family: 'Courier New', monospace; font-weight: bold; fill: white; }
+      .logo-bracket { fill: white; stroke: white; stroke-width: 2; }
+      .logo-cursor { fill: #60a5fa; }
+    </style>
+  </defs>
+  
+  <!-- Background circle with blue gradient -->
+  <circle cx="100" cy="100" r="95" fill="url(#blueGradient)" stroke="#1e40af" stroke-width="3"/>
+  
+  <!-- Terminal window -->
+  <rect x="30" y="50" width="140" height="100" rx="8" fill="rgba(30, 64, 175, 0.3)" stroke="white" stroke-width="2"/>
+  
+  <!-- Terminal header -->
+  <rect x="30" y="50" width="140" height="20" rx="8" fill="rgba(255, 255, 255, 0.2)"/>
+  <circle cx="45" cy="60" r="3" fill="#ef4444"/>
+  <circle cx="55" cy="60" r="3" fill="#f59e0b"/>
+  <circle cx="65" cy="60" r="3" fill="#10b981"/>
+  
+  <!-- Code brackets -->
+  <text x="50" y="100" class="logo-text" font-size="24">&lt;</text>
+  <text x="130" y="100" class="logo-text" font-size="24">/&gt;</text>
+  
+  <!-- CLI text -->
+  <text x="70" y="105" class="logo-text" font-size="16">CLI</text>
+  
+  <!-- Cursor -->
+  <rect x="105" y="90" width="2" height="16" class="logo-cursor"/>
+  
+  <!-- Command line prompt -->
+  <text x="50" y="130" class="logo-text" font-size="12">$ codewise</text>
+  <rect x="120" y="120" width="2" height="12" class="logo-cursor" opacity="0.8"/>
+  
+  <!-- Accent dots for modern touch -->
+  <circle cx="160" cy="40" r="2" fill="#60a5fa" opacity="0.6"/>
+  <circle cx="40" cy="160" r="2" fill="#60a5fa" opacity="0.6"/>
+  <circle cx="160" cy="160" r="2" fill="#60a5fa" opacity="0.6"/>
+</svg>

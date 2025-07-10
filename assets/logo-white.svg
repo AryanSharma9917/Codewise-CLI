@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .logo-text { font-family: 'Courier New', monospace; font-weight: bold; fill: white; }
+      .logo-bracket { fill: white; stroke: white; stroke-width: 2; }
+      .logo-cursor { fill: white; }
+    </style>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="white" stroke-width="3" opacity="0.2"/>
+  
+  <!-- Terminal window -->
+  <rect x="30" y="50" width="140" height="100" rx="8" fill="none" stroke="white" stroke-width="2"/>
+  
+  <!-- Terminal header -->
+  <rect x="30" y="50" width="140" height="20" rx="8" fill="white" opacity="0.1"/>
+  <circle cx="45" cy="60" r="3" fill="white" opacity="0.6"/>
+  <circle cx="55" cy="60" r="3" fill="white" opacity="0.6"/>
+  <circle cx="65" cy="60" r="3" fill="white" opacity="0.6"/>
+  
+  <!-- Code brackets -->
+  <text x="50" y="100" class="logo-text" font-size="24">&lt;</text>
+  <text x="130" y="100" class="logo-text" font-size="24">/&gt;</text>
+  
+  <!-- CLI text -->
+  <text x="70" y="105" class="logo-text" font-size="16">CLI</text>
+  
+  <!-- Cursor -->
+  <rect x="105" y="90" width="2" height="16" class="logo-cursor"/>
+  
+  <!-- Command line prompt -->
+  <text x="50" y="130" class="logo-text" font-size="12">$ codewise</text>
+  <rect x="120" y="120" width="2" height="12" class="logo-cursor" opacity="0.8"/>
+</svg>
