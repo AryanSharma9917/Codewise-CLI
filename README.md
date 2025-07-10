@@ -1,7 +1,7 @@
 # Codewise-CLI
 
 <div align="center">
-  <img src="/workspaces/Codewise-CLI/logo/logo_pic.png" alt="Codewise Logo" width="220"/>
+  <img src="/logo/logo_pic.png" alt="Codewise Logo" width="220"/>
 </div>
 
 Codewise is a powerful CLI tool that simplifies common DevOps tasks such as:
