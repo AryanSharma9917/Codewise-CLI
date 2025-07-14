@@ -172,4 +172,4 @@ Licensed under the MIT License. See `LICENSE` for more.
 
 Aryan Sharma
 
-GitHub: [@aryansharma9917](https://www.google.com/search?q=https://github.com/aryansharma9917)
+GitHub: [@aryansharma9917](https://github.com/aryansharma9917)
