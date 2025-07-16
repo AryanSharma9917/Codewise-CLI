@@ -168,8 +168,9 @@ Licensed under the MIT License. See `LICENSE` for more.
 
 -----
 
-## 📬 Author
+## 📚 Blog Post
 
-Aryan Sharma
+Check out the behind-the-scenes story and development journey in Aryan's detailed blog post:
 
-GitHub: [@aryansharma9917](https://github.com/aryansharma9917)
+> **📖 [I Built a DevOps CLI Tool in Go – Meet Codewise-CLI](https://dev.to/aryansharma9917/i-built-a-devops-cli-tool-in-go-meet-codewise-cli-5149)**  
+> Dive into how this tool was built from scratch, its motivations, challenges, features, and future roadmap.
