@@ -7,8 +7,19 @@ on:
     branches: [ main ]
 
 jobs:
+  dco-check:
+    name: DCO Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check commit sign-off
+        uses: docker://ghcr.io/lee-dohm/dco@sha256:ea92996c80ab61d1d87c4ef8a7fa7c70e66d64615ec4c8a83b396de3d3e6c336
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   test:
     runs-on: ubuntu-latest
+    needs: dco-check
 
     steps:
       - uses: actions/checkout@v3
