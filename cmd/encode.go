@@ -7,6 +7,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/aryansharma9917/Codewise-CLI/pkg/encoder"
+	"github.com/aryansharma9917/Codewise-CLI/pkg/prompt"
 )
 
 var (
@@ -16,15 +17,26 @@ var (
 	base64Mode   bool
 	base64Decode bool
 	envToJSON    bool
+	force        bool
 )
 
 var encodeCmd = &cobra.Command{
 	Use:   "encode",
 	Short: "Convert between formats (YAML ⇄ JSON, base64, .env, TOML ⇄ JSON, XML ⇄ JSON)",
 	Run: func(cmd *cobra.Command, args []string) {
-		if inputFile == "" || outputFile == "" {
-			fmt.Println("❌ Please provide both --input and --output flags")
-			os.Exit(1)
+
+		// Interactive prompts if missing
+		if inputFile == "" {
+			inputFile = prompt.AskInputFile()
+		}
+		if outputFile == "" {
+			outputFile = prompt.AskOutputFile()
+		}
+
+		// Confirm overwrite if needed
+		if !force && !prompt.ConfirmOverwrite(outputFile) {
+			fmt.Println("❌ Operation cancelled by user")
+			return
 		}
 
 		var err error
@@ -97,5 +109,5 @@ func init() {
 	encodeCmd.Flags().BoolVar(&base64Mode, "base64", false, "Perform base64 encode/decode")
 	encodeCmd.Flags().BoolVar(&base64Decode, "decode", false, "Decode base64 instead of encode (use with --base64)")
 	encodeCmd.Flags().BoolVar(&envToJSON, "env-to-json", false, "Convert .env file to JSON")
+	encodeCmd.Flags().BoolVarP(&force, "force", "f", false, "Force overwrite output file if it exists")
 }
-// JSON → TOML

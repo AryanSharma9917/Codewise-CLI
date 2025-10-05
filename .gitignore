@@ -1,61 +1,61 @@
-# Compiled Object files, Static and Dynamic libs (Shared Objects)
+# -----------------------------
+# Go / Build / Binary files
+# -----------------------------
 *.o
 *.a
 *.so
-
-# Folders
-_obj
-_test
-
-# Architecture specific extensions/prefixes
-*.[568vq]
-[568vq].out
-
-*.cgo1.go
-*.cgo2.c
-_cgo_defun.c
-_cgo_gotypes.go
-_cgo_export.*
-
-_testmain.go
-
-# Vim files https://github.com/github/gitignore/blob/master/Global/Vim.gitignore
-# swap
-[._]*.s[a-w][a-z]
-[._]s[a-w][a-z]
-# session
-Session.vim
-# temporary
-.netrwhist
-*~
-# auto-generated tag files
-tags
-
 *.exe
-cobra.test
-bin
+*.out
+*.bin
 
+# Cobra test
+cobra.test
+
+# Build folders
+bin/
+dist/
+
+# -----------------------------
+# Project specific / temporary
+# -----------------------------
+output.json
+output.yaml
+output.xml
+config.json
+env.json
+plain.txt
+input.xml
+config.toml
+config.yaml
+
+# pkg/prompt folder (if used for interactive prompts)
+pkg/prompt/
+
+# -----------------------------
+# IDE / Editor
+# -----------------------------
 .idea/
 .vscode/
 *.iml
+*.swp
+Session.vim
+.netrwhist
+*~
 
-# Build files
-
+# -----------------------------
+# Other generated files / folders
+# -----------------------------
 Codewise-CLI
-
-# Env files
-
-# Output files (Including test output)
-.env
-dist/
-output.json
-output.yaml
-output.yml
-JTY_output.yaml
-KVTJ_output.json
-YTJ_output.json
+myapp/
 myapp/codewise
 codewise
 myappcodewise-cli
 codewise-cli
-myapp/
+JTY_output.yaml
+KVTJ_output.json
+YTJ_output.json
+
+# -----------------------------
+# Environment files
+# -----------------------------
+.env
