@@ -35,3 +35,6 @@ require (
 	golang.org/x/net v0.6.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1
 )
+
+// **Use local module for CI/CD**
+replace github.com/aryansharma9917/Codewise-CLI => ./
