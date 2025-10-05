@@ -14,7 +14,7 @@ Codewise is a powerful CLI tool that simplifies common DevOps tasks such as:
 
 -----
 
-##  Getting Started :
+##  Getting Started:
 
 ### Clone the Repository
 
