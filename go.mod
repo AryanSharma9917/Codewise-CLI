@@ -9,6 +9,8 @@ require (
 	github.com/tcnksm/go-latest v0.0.0-20170313132115-e3007ae9052e
 )
 
+replace github.com/aryansharma9917/Codewise-CLI => ./
+
 require (
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
 	github.com/mattn/go-colorable v0.1.2 // indirect
@@ -37,4 +39,4 @@ require (
 )
 
 // **Use local module for CI/CD**
-replace github.com/aryansharma9917/Codewise-CLI => ./
+// replace github.com/aryansharma9917/Codewise-CLI => ./
