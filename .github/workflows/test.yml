@@ -1,4 +1,4 @@
-name: Run Go Tests
+name: Build & Test Codewise-CLI
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,6 +17,9 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: 1.22.x
+
+      - name: Enable Go Modules
+        run: go env -w GO111MODULE=on
 
       - name: Ensure dependencies
         run: go mod tidy
