@@ -28,8 +28,8 @@ input.xml
 config.toml
 config.yaml
 
-# pkg/prompt folder (if used for interactive prompts)
-pkg/prompt/
+# pkg/prompt folder (included for interactive prompts)
+# pkg/prompt/   <- commented out so files are tracked
 
 # -----------------------------
 # IDE / Editor
