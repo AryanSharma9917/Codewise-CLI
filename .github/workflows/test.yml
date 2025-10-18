@@ -21,18 +21,23 @@ jobs:
         with:
           go-version: '1.22'
 
-      - name: Enable Go Modules
-        run: go env -w GO111MODULE=on
-
-      - name: Ensure local replace
+      - name: Add local replace directive
         run: |
           go mod edit -replace github.com/aryansharma9917/codewise-cli=./
-          cat go.mod
+          echo "✅ Added local replace directive:"
+          grep "replace" go.mod
 
-      - name: Tidy up modules
-        run: go mod tidy
+      - name: Verify module paths exist
+        run: |
+          ls -R pkg || echo "❌ pkg directory missing"
+          ls -R cmd || echo "❌ cmd directory missing"
 
-      - name: Build CLI Binary
+      - name: Tidy and vendor modules
+        run: |
+          go mod tidy
+          go mod vendor
+
+      - name: Build CLI
         run: go build -v -o codewise main.go
 
       - name: Run Tests
