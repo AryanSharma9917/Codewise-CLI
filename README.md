@@ -1,4 +1,4 @@
-# Codewise-CLI
+# codewise-cli
 
 <div align="center">
   <img src="/logo/logo_pic.png" alt="Codewise Logo" width="220"/>
@@ -19,8 +19,8 @@ Codewise is a powerful CLI tool that simplifies common DevOps tasks such as:
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/aryansharma9917/Codewise-CLI.git
-cd Codewise-CLI
+git clone https://github.com/aryansharma9917/codewise-cli.git
+cd codewise-cli
 ```
 
 ### Build the Binary
@@ -146,8 +146,8 @@ Test coverage includes:
 
 ```bash
 # Fork and clone the repo
-git clone https://github.com/<your-username>/Codewise-CLI.git
-cd Codewise-CLI
+git clone https://github.com/<your-username>/codewise-cli.git
+cd codewise-cli
 
 # Create a feature branch
 git checkout -b my-feature
@@ -172,5 +172,5 @@ Licensed under the MIT License. See `LICENSE` for more.
 
 Check out the behind-the-scenes story and development journey in Aryan's detailed blog post:
 
-> **📖 [I Built a DevOps CLI Tool in Go – Meet Codewise-CLI](https://dev.to/aryansharma9917/i-built-a-devops-cli-tool-in-go-meet-codewise-cli-5149)**  
+> **📖 [I Built a DevOps CLI Tool in Go – Meet codewise-cli](https://dev.to/aryansharma9917/i-built-a-devops-cli-tool-in-go-meet-codewise-cli-5149)**  
 > Dive into how this tool was built from scratch, its motivations, challenges, features, and future roadmap.

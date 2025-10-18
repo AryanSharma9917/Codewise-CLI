@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
-	"github.com/aryansharma9917/Codewise-CLI/pkg/encoder"
-	"github.com/aryansharma9917/Codewise-CLI/pkg/prompt"
+	"github.com/aryansharma9917/codewise-cli/pkg/encoder"
+	"github.com/aryansharma9917/codewise-cli/pkg/prompt"
 )
 
 var (

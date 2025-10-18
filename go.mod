@@ -1,4 +1,4 @@
-module github.com/aryansharma9917/Codewise-CLI
+module github.com/aryansharma9917/codewise-cli
 
 go 1.20
 
@@ -9,7 +9,7 @@ require (
 	github.com/tcnksm/go-latest v0.0.0-20170313132115-e3007ae9052e
 )
 
-replace github.com/aryansharma9917/Codewise-CLI => ./
+replace github.com/aryansharma9917/codewise-cli => ./
 
 require (
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
@@ -39,4 +39,4 @@ require (
 )
 
 // **Use local module for CI/CD**
-// replace github.com/aryansharma9917/Codewise-CLI => ./
+// replace github.com/aryansharma9917/codewise-cli => ./

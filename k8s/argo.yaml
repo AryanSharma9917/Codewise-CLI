@@ -8,7 +8,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    repoURL: https://github.com/AryanSharma9917/Codewise-CLI
+    repoURL: https://github.com/AryanSharma9917/codewise-cli
     targetRevision: HEAD
     path: .
   syncPolicy:

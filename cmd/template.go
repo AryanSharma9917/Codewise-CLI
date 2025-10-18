@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/aryansharma9917/Codewise-CLI/pkg/generator"
+	"github.com/aryansharma9917/codewise-cli/pkg/generator"
 )
 
 var (

@@ -1,4 +1,4 @@
-name: Build & Test Codewise-CLI
+name: Build & Test codewise-cli
 
 on:
   push:
