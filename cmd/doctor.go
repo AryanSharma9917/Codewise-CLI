@@ -28,12 +28,17 @@ var doctorCmd = &cobra.Command{
 
 		// Docker
 		checkDocker()
+
+		// Git
+		checkGit()
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(doctorCmd)
 }
+
+// ---- helpers ----
 
 func checkDocker() {
 	cmd := exec.Command("docker", "--version")
@@ -47,4 +52,18 @@ func checkDocker() {
 	}
 
 	fmt.Println("Docker:", strings.TrimSpace(out.String()))
+}
+
+func checkGit() {
+	cmd := exec.Command("git", "--version")
+
+	var out bytes.Buffer
+	cmd.Stdout = &out
+
+	if err := cmd.Run(); err != nil {
+		fmt.Println("Git: not installed")
+		return
+	}
+
+	fmt.Println("Git:", strings.TrimSpace(out.String()))
 }
