@@ -1,11 +1,10 @@
 package cmd
 
 import (
-	"bytes"
 	"fmt"
+	"os"
 	"os/exec"
 	"runtime"
-	"strings"
 
 	"github.com/spf13/cobra"
 )
@@ -17,53 +16,35 @@ var doctorCmd = &cobra.Command{
 		fmt.Println("Codewise CLI Doctor")
 		fmt.Println("-------------------")
 
-		// Go
+		// Go info
 		fmt.Println("Go version:", runtime.Version())
-
-		// OS
 		fmt.Println("OS/Arch:", runtime.GOOS, runtime.GOARCH)
 
-		// Codewise
+		// Codewise version
 		fmt.Println("Codewise version:", rootCmd.Version)
 
-		// Docker
-		checkDocker()
+		// Working directory
+		if wd, err := os.Getwd(); err == nil {
+			fmt.Println("Working directory:", wd)
+		}
 
-		// Git
-		checkGit()
+		// Git version
+		if out, err := exec.Command("git", "--version").Output(); err == nil {
+			fmt.Println("Git:", string(out))
+		} else {
+			fmt.Println("Git: not found")
+		}
+
+		// Config path (future use)
+		configPath := os.ExpandEnv("$HOME/.codewise/config.yaml")
+		if _, err := os.Stat(configPath); err == nil {
+			fmt.Println("Config file:", configPath)
+		} else {
+			fmt.Println("Config file:", configPath, "(not found)")
+		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(doctorCmd)
-}
-
-// ---- helpers ----
-
-func checkDocker() {
-	cmd := exec.Command("docker", "--version")
-
-	var out bytes.Buffer
-	cmd.Stdout = &out
-
-	if err := cmd.Run(); err != nil {
-		fmt.Println("Docker: not installed")
-		return
-	}
-
-	fmt.Println("Docker:", strings.TrimSpace(out.String()))
-}
-
-func checkGit() {
-	cmd := exec.Command("git", "--version")
-
-	var out bytes.Buffer
-	cmd.Stdout = &out
-
-	if err := cmd.Run(); err != nil {
-		fmt.Println("Git: not installed")
-		return
-	}
-
-	fmt.Println("Git:", strings.TrimSpace(out.String()))
 }
