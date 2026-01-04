@@ -47,3 +47,19 @@ func InitConfig() (string, error) {
 
 	return configPath, nil
 }
+
+// ReadConfig reads and returns the config file contents
+func ReadConfig() ([]byte, error) {
+	home, err := os.UserHomeDir()
+	if err != nil {
+		return nil, err
+	}
+
+	configPath := filepath.Join(home, ConfigDirName, ConfigFileName)
+
+	if _, err := os.Stat(configPath); err != nil {
+		return nil, fmt.Errorf("config file not found")
+	}
+
+	return os.ReadFile(configPath)
+}
