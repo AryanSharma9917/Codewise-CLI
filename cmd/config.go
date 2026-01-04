@@ -18,7 +18,7 @@ var configInitCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		path, err := config.InitConfig()
 		if err != nil {
-			fmt.Println("ℹ️", err.Error())
+			fmt.Println("ℹ", err.Error())
 			return
 		}
 		fmt.Println("Config created at:", path)
