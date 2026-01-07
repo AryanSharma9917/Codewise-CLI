@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codewise-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: codewise
+  template:
+    metadata:
+      labels:
+        app: codewise
+    spec:
+      containers:
+        - name: codewise
+          image: codewise:latest
+          ports:
+            - containerPort: 8080
