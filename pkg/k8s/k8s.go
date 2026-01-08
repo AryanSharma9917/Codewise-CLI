@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+
+	"github.com/aryansharma9917/codewise-cli/pkg/config"
 )
 
 const k8sDir = "k8s/app"
@@ -13,14 +15,27 @@ type Options struct {
 	Image   string
 }
 
-func deploymentYAML(opts Options) []byte {
+func applyDefaults(opts Options) Options {
+	cfg, err := config.ReadConfig()
+	if err == nil {
+		if opts.AppName == "" {
+			opts.AppName = cfg.Defaults.AppName
+		}
+		if opts.Image == "" {
+			opts.Image = cfg.Defaults.Image
+		}
+	}
 	if opts.AppName == "" {
 		opts.AppName = "codewise-app"
 	}
 	if opts.Image == "" {
 		opts.Image = "codewise:latest"
 	}
+	return opts
+}
 
+func deploymentYAML(opts Options) []byte {
+	opts = applyDefaults(opts)
 	return []byte(fmt.Sprintf(`apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -43,11 +58,10 @@ spec:
 `, opts.AppName, opts.AppName, opts.AppName, opts.AppName, opts.Image))
 }
 
-func serviceYAML(appName string) []byte {
-	if appName == "" {
-		appName = "codewise-app"
+func serviceYAML(app string) []byte {
+	if app == "" {
+		app = "codewise-app"
 	}
-
 	return []byte(fmt.Sprintf(`apiVersion: v1
 kind: Service
 metadata:
@@ -59,13 +73,14 @@ spec:
   ports:
     - port: 80
       targetPort: 8080
-`, appName, appName))
+`, app, app))
 }
 
-// InitK8sManifests creates Kubernetes manifests with optional values
 func InitK8sManifests(opts Options) error {
+	opts = applyDefaults(opts)
+
 	if _, err := os.Stat(k8sDir); err == nil {
-		return fmt.Errorf("k8s/app directory already exists")
+		return fmt.Errorf("%s directory already exists", k8sDir)
 	}
 
 	if err := os.MkdirAll(k8sDir, 0755); err != nil {

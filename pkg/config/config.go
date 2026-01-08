@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+
+	"gopkg.in/yaml.v3"
 )
 
 const (
@@ -11,16 +13,27 @@ const (
 	ConfigFileName = "config.yaml"
 )
 
-// DefaultConfig is the initial config content
+type Config struct {
+	Version string `yaml:"version"`
+	User    struct {
+		Name string `yaml:"name"`
+	} `yaml:"user"`
+	Defaults struct {
+		AppName string `yaml:"app_name"`
+		Image   string `yaml:"image"`
+		RepoURL string `yaml:"repo_url"`
+	} `yaml:"defaults"`
+}
+
 var DefaultConfig = []byte(`version: v1
 user:
   name: aryan
 defaults:
   app_name: myapp
+  image: codewise:latest
   repo_url: https://github.com/example/repo
 `)
 
-// InitConfig creates the config directory and file
 func InitConfig() (string, error) {
 	home, err := os.UserHomeDir()
 	if err != nil {
@@ -30,17 +43,14 @@ func InitConfig() (string, error) {
 	configDir := filepath.Join(home, ConfigDirName)
 	configPath := filepath.Join(configDir, ConfigFileName)
 
-	// Create directory if not exists
 	if err := os.MkdirAll(configDir, 0755); err != nil {
 		return "", err
 	}
 
-	// If config already exists, do nothing
 	if _, err := os.Stat(configPath); err == nil {
 		return configPath, fmt.Errorf("config already exists")
 	}
 
-	// Write default config
 	if err := os.WriteFile(configPath, DefaultConfig, 0644); err != nil {
 		return "", err
 	}
@@ -48,8 +58,7 @@ func InitConfig() (string, error) {
 	return configPath, nil
 }
 
-// ReadConfig reads and returns the config file contents
-func ReadConfig() ([]byte, error) {
+func ReadConfig() (*Config, error) {
 	home, err := os.UserHomeDir()
 	if err != nil {
 		return nil, err
@@ -57,9 +66,15 @@ func ReadConfig() ([]byte, error) {
 
 	configPath := filepath.Join(home, ConfigDirName, ConfigFileName)
 
-	if _, err := os.Stat(configPath); err != nil {
+	data, err := os.ReadFile(configPath)
+	if err != nil {
 		return nil, fmt.Errorf("config file not found")
 	}
 
-	return os.ReadFile(configPath)
+	var cfg Config
+	if err := yaml.Unmarshal(data, &cfg); err != nil {
+		return nil, err
+	}
+
+	return &cfg, nil
 }
