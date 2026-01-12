@@ -7,6 +7,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var k8sNamespace string
+
 var k8sApplyCmd = &cobra.Command{
 	Use:   "apply",
 	Short: "Apply Kubernetes manifests to the current cluster",
@@ -21,7 +23,7 @@ var k8sApplyCmd = &cobra.Command{
 			return
 		}
 
-		if err := k8s.ApplyManifests(); err != nil {
+		if err := k8s.ApplyManifests(k8sNamespace); err != nil {
 			fmt.Println("info:", err.Error())
 			return
 		}
@@ -29,5 +31,6 @@ var k8sApplyCmd = &cobra.Command{
 }
 
 func init() {
+	k8sApplyCmd.Flags().StringVar(&k8sNamespace, "namespace", "", "Kubernetes namespace for deployment")
 	k8sCmd.AddCommand(k8sApplyCmd)
 }
