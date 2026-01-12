@@ -6,6 +6,8 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+
+	"github.com/aryansharma9917/codewise-cli/pkg/config"
 )
 
 func CheckKubectl() error {
@@ -24,17 +26,34 @@ func CheckCluster() error {
 	return nil
 }
 
-func ApplyManifests() error {
+func resolveNamespace(flag string) string {
+	if flag != "" {
+		return flag
+	}
+
+	cfg, err := config.ReadConfig()
+	if err == nil && cfg.Defaults.Namespace != "" {
+		return cfg.Defaults.Namespace
+	}
+
+	return "default"
+}
+
+func ApplyManifests(namespace string) error {
 	path := filepath.Join("k8s", "app")
 
 	if _, err := os.Stat(path); err != nil {
 		return fmt.Errorf("no manifests found at %s", path)
 	}
 
-	cmd := exec.Command("kubectl", "apply", "-f", path)
+	namespace = resolveNamespace(namespace)
+
+	args := []string{"apply", "-f", path, "-n", namespace}
+
+	cmd := exec.Command("kubectl", args...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	fmt.Println("running: kubectl apply -f", path)
+	fmt.Println("running: kubectl", args)
 	return cmd.Run()
 }

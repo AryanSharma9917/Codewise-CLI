@@ -19,9 +19,10 @@ type Config struct {
 		Name string `yaml:"name"`
 	} `yaml:"user"`
 	Defaults struct {
-		AppName string `yaml:"app_name"`
-		Image   string `yaml:"image"`
-		RepoURL string `yaml:"repo_url"`
+		AppName   string `yaml:"app_name"`
+		Image     string `yaml:"image"`
+		RepoURL   string `yaml:"repo_url"`
+		Namespace string `yaml:"namespace"`
 	} `yaml:"defaults"`
 }
 
@@ -32,6 +33,7 @@ defaults:
   app_name: myapp
   image: codewise:latest
   repo_url: https://github.com/example/repo
+  namespace: default
 `)
 
 func InitConfig() (string, error) {
