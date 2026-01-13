@@ -39,7 +39,20 @@ func resolveNamespace(flag string) string {
 	return "default"
 }
 
-func ApplyManifests(namespace string) error {
+func resolveContext(flag string) string {
+	if flag != "" {
+		return flag
+	}
+
+	cfg, err := config.ReadConfig()
+	if err == nil && cfg.Defaults.Context != "" {
+		return cfg.Defaults.Context
+	}
+
+	return ""
+}
+
+func ApplyManifests(namespace, context string) error {
 	path := filepath.Join("k8s", "app")
 
 	if _, err := os.Stat(path); err != nil {
@@ -47,8 +60,17 @@ func ApplyManifests(namespace string) error {
 	}
 
 	namespace = resolveNamespace(namespace)
+	context = resolveContext(context)
 
-	args := []string{"apply", "-f", path, "-n", namespace}
+	args := []string{"apply", "-f", path}
+
+	if namespace != "" {
+		args = append(args, "-n", namespace)
+	}
+
+	if context != "" {
+		args = append(args, "--context", context)
+	}
 
 	cmd := exec.Command("kubectl", args...)
 	cmd.Stdout = os.Stdout
