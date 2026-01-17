@@ -1,3 +1,4 @@
+# cmd
 name: CI for {{.AppName}}
 
 on:
