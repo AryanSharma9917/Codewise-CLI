@@ -1,176 +1,234 @@
-# codewise-cli
+# Codewise CLI
 
 <div align="center">
-  <img src="/logo/logo_pic.png" alt="Codewise Logo" width="220"/>
+  <img src="logo/logo_pic.png" alt="Codewise Logo" width="220"/>
 </div>
 
-Codewise is a powerful CLI tool that simplifies common DevOps tasks such as:
+<br/>
 
-  * Encoding/decoding files
-  * JSON/YAML conversions
-  * Dockerfile generation
-  * Kubernetes manifest scaffolding
-  * Rendering templates with Go's `text/template` engine
 
------
+Codewise is a DevOps-oriented command-line utility for scaffolding, packaging, and deploying containerized applications using a consistent workflow. It enables developers and platform engineers to move from source code to running workloads using Docker, Kubernetes, and Helm without switching tools or remembering boilerplate syntax.
 
-##  Getting Started:
+---
 
-### Clone the Repository
+## Features
+
+Codewise provides automation for:
+
+- Dockerfile scaffolding and image builds
+- Kubernetes manifest generation and deployment
+- Helm chart scaffolding
+- Namespace, context, and dry-run support for Kubernetes operations
+- Configuration bootstrapping for defaults (image, namespace, repo)
+- File encoding utilities (Base64, YAML ⇄ JSON, ENV parsing)
+- Templating & project bootstrap helpers
+
+---
+
+## Installation
+
+Clone the repository:
 
 ```bash
 git clone https://github.com/aryansharma9917/codewise-cli.git
 cd codewise-cli
-```
+````
 
-### Build the Binary
+Build from source:
 
 ```bash
 go build -o codewise main.go
 ```
 
-### (Optional) Install Globally
+(Optional) install globally:
 
 ```bash
 sudo mv codewise /usr/local/bin/
 ```
 
------
+---
 
 ## Usage
 
+General syntax:
+
 ```bash
-codewise <command> [flags]
+codewise <command> [subcommand] [flags]
 ```
 
------
+---
 
-## Commands & Examples
+## Configuration
 
-### `encode` — Format Conversion & Encoding
-
-| Conversion Type | Description           | Example                                                                     |
-| :-------------- | :-------------------- | :-------------------------------------------------------------------------- |
-| `JTY`           | JSON to YAML          | `codewise encode --input input.json --output output.yaml --type JTY`      |
-| `YTJ`           | YAML to JSON          | `codewise encode --input input.yaml --output output.json --type YTJ`      |
-| `KVTJ`          | .env to JSON          | `codewise encode --input .env --output env.json --type KVTJ`              |
-| `B64E`          | Base64 Encode         | `codewise encode --input input.txt --output encoded.txt --type B64E`      |
-| `B64D`          | Base64 Decode         | `codewise encode --input encoded.txt --output decoded.txt --type B64D`    |
-
-### `generate` — Starter File Generators
-
-Generate a Dockerfile:
+Initialize a personal configuration:
 
 ```bash
-codewise generate dockerfile --output Dockerfile
+codewise config init
 ```
 
-Generate a Kubernetes manifest:
+This creates:
 
-```bash
-codewise generate k8s --output deployment.yaml
+```
+~/.codewise/config.yaml
 ```
 
-### `template` — Render Templated YAMLs
+example:
 
-Use Go `.tpl` template and `.yaml` values file to generate output YAML:
-
-```bash
-codewise template --template template.tpl --values values.yaml --output rendered.yaml
+```yaml
+defaults:
+  app_name: myapp
+  image: codewise:latest
+  namespace: default
+  context: ""
 ```
 
------
+Configuration values can be overridden with CLI flags.
 
-## 🐳 Docker Usage
+---
 
-### 🔨 Build Docker Image
+## Docker Workflow
+
+Initialize a Dockerfile:
 
 ```bash
-docker build -t aryansharma04/codewise-cli:latest .
+codewise docker init
 ```
 
-### Run Using Docker
+Validate Dockerfile structure:
 
 ```bash
-docker run --rm -v $(pwd):/app aryansharma04/codewise-cli:latest <command>
+codewise docker validate
 ```
 
-Example:
+Build container image:
 
 ```bash
-docker run --rm -v $(pwd):/app aryansharma04/codewise-cli:latest encode --input /app/input.json --output /app/output.yaml --type JTY
+codewise docker build
 ```
 
------
+---
 
-## ✅ Running Tests
+## Kubernetes Workflow
 
-Make sure Go is installed:
+Initialize manifests:
 
 ```bash
-go test ./... -v
+codewise k8s init
 ```
 
-Test coverage includes:
-
-  * ✅ JSON to YAML
-  * ✅ YAML to JSON
-  * ✅ ENV to JSON
-  * ✅ Base64 encode/decode
-  * ✅ Template rendering
-
------
-
-## 📁 Project Structure
+Apply manifests to a cluster:
 
 ```bash
+codewise k8s apply --namespace dev --context minikube
+```
+
+Dry-run mode (no cluster required):
+
+```bash
+codewise k8s apply --dry-run
+```
+
+Delete deployment:
+
+```bash
+codewise k8s delete --namespace dev
+```
+
+---
+
+## Helm Workflow
+
+Scaffold a Helm chart:
+
+```bash
+codewise helm init
+```
+
+This creates:
+
+```
+helm/chart/
+├── Chart.yaml
+├── values.yaml
+└── templates/
+    ├── deployment.yaml
+    └── service.yaml
+```
+
+---
+
+## Encoding & Conversion Utilities
+
+Usage:
+
+```bash
+codewise encode --input file --output out --type <mode>
+```
+
+Supported modes:
+
+| mode   | description   |
+| ------ | ------------- |
+| `JTY`  | JSON → YAML   |
+| `YTJ`  | YAML → JSON   |
+| `KVTJ` | .env → JSON   |
+| `B64E` | Base64 encode |
+| `B64D` | Base64 decode |
+
+---
+
+## Example End-to-End Workflow
+
+```bash
+codewise config init
+codewise docker init
+codewise docker build
+codewise k8s init
+codewise k8s apply --namespace dev --context minikube
+codewise helm init
+```
+
+---
+
+## Project Structure
+
+```
 .
-├── cmd/             # CLI command handlers
-├── pkg/
-│   ├── encoder/     # Encoding & conversion logic
-│   ├── generator/   # Project scaffolding logic
-│   └── validator/   # Future: Schema & config validation
-├── templates/       # Go template files
-├── tests/           # Unit tests
-├── testdata/        # Sample input files for testing
+├── cmd/               # CLI commands
+├── pkg/               # Core logic (docker, k8s, helm, config, encode)
+├── helm/              # Generated Helm charts
+├── k8s/               # Generated Kubernetes manifests
+├── config/            # Configuration helpers
 ├── Dockerfile
-├── Makefile
 ├── go.mod
-├── main.go
-└── README.md
+└── main.go
 ```
 
------
+---
 
-## 🤝 Contributing
+## Roadmap
 
-```bash
-# Fork and clone the repo
-git clone https://github.com/<your-username>/codewise-cli.git
-cd codewise-cli
+Planned enhancements include:
 
-# Create a feature branch
-git checkout -b my-feature
+* Helm install/upgrade operations
+* Helm push to OCI registries
+* GitOps integration (ArgoCD / Flux)
+* CI/CD pipeline generation (GitHub Actions)
+* Image scanning (Trivy/Syft plugins)
+* Terraform infrastructure modules
+* Local cluster provisioning (kind/k3d/minikube)
+* Plugin system for custom extensions
+* Global binary installation via Homebrew/Scoop
 
-# Make changes and push
-git add .
-git commit -m "Add awesome feature"
-git push origin my-feature
-```
+---
 
-Then open a Pull Request 🚀
+## Contributing
 
------
+Contributions are welcome. The project follows a logical commit layering:
 
-## 🛡 License
+* Logic changes under `pkg/`
+* CLI wiring under `cmd/`
+* Scaffold output under `k8s/` and `helm/`
 
-Licensed under the MIT License. See `LICENSE` for more.
+Fork, branch, commit, and open a PR.
 
------
-
-## 📚 Blog Post
-
-Check out the behind-the-scenes story and development journey in Aryan's detailed blog post:
-
-> **📖 [I Built a DevOps CLI Tool in Go – Meet codewise-cli](https://dev.to/aryansharma9917/i-built-a-devops-cli-tool-in-go-meet-codewise-cli-5149)**  
-> Dive into how this tool was built from scratch, its motivations, challenges, features, and future roadmap.
