@@ -52,7 +52,7 @@ func resolveContext(flag string) string {
 	return ""
 }
 
-func ApplyManifests(namespace, context string) error {
+func ApplyManifests(namespace, context string, dryRun bool) error {
 	path := filepath.Join("k8s", "app")
 
 	if _, err := os.Stat(path); err != nil {
@@ -72,10 +72,19 @@ func ApplyManifests(namespace, context string) error {
 		args = append(args, "--context", context)
 	}
 
+	if dryRun {
+		args = append(args, "--dry-run=client")
+	}
+
+	if dryRun {
+		fmt.Println("dry run:", "kubectl", args)
+		return nil
+	}
+
 	cmd := exec.Command("kubectl", args...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	fmt.Println("running: kubectl", args)
+	fmt.Println("running:", "kubectl", args)
 	return cmd.Run()
 }
