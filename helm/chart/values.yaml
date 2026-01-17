@@ -1,0 +1,6 @@
+image:
+  repository: 
+  tag: latest
+  pullPolicy: IfNotPresent
+
+namespace: default
