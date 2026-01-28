@@ -18,12 +18,15 @@ type Config struct {
 	User    struct {
 		Name string `yaml:"name"`
 	} `yaml:"user"`
+
 	Defaults struct {
 		AppName   string `yaml:"app_name"`
 		Image     string `yaml:"image"`
+		ImageTag  string `yaml:"image_tag"`
 		RepoURL   string `yaml:"repo_url"`
 		Namespace string `yaml:"namespace"`
 		Context   string `yaml:"context"`
+		Branch    string `yaml:"branch"`
 	} `yaml:"defaults"`
 }
 
@@ -32,10 +35,12 @@ user:
   name: aryan
 defaults:
   app_name: myapp
-  image: codewise:latest
+  image: codewise
+  image_tag: latest
   repo_url: https://github.com/example/repo
   namespace: default
   context: ""
+  branch: main
 `)
 
 func InitConfig() (string, error) {
