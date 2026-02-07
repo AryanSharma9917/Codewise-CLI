@@ -10,22 +10,32 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "codewise",
 	Short: "CLI that helps you scaffold, encode, validate, and automate DevOps workflows easily.",
-	Long: `Codewise CLI v1.1.0
+	Long: `Codewise CLI
 
-This CLI helps you with common DevOps tasks like:
-- JSON/YAML conversions
-- Base64 encoding/decoding
-- Dockerfile and Kubernetes manifest generation
-- Project scaffolding and GitHub Actions template rendering
+A powerful platform-style CLI for DevOps workflows including:
+
+• Environment-aware deployments
+• Kubernetes orchestration
+• Helm automation
+• Docker tooling
+• Template generation
+• Encoding utilities
 `,
+	Run: func(cmd *cobra.Command, args []string) {
+
+		// Banner ONLY when no subcommand is provided
+		PrintBanner()
+
+		_ = cmd.Help()
+	},
 	Version: "v1.1.0",
 }
 
 // Execute runs the root command.
 func Execute() {
-	PrintBanner()
+
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println("❌", err)
+		fmt.Println("error:", err)
 		os.Exit(1)
 	}
 }
@@ -40,5 +50,6 @@ func PrintBanner() {
   \____\___/ \__,_|\___/|_.__/ \__, |
                                |___/ 
 Codewise CLI - Simplify your DevOps
+
 `)
 }
