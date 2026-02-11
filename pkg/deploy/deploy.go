@@ -22,57 +22,18 @@ func Run(envName string, dryRun bool) error {
 		return err
 	}
 
-	strategy := ResolveStrategy(environment)
+	command, _, err := BuildCommand(environment)
+	if err != nil {
+		return err
+	}
+
+	if err := checkDependency(command.Name); err != nil {
+		return err
+	}
 
 	executor := Executor{
 		DryRun: dryRun,
 	}
 
-	switch strategy {
-
-	case StrategyHelm:
-
-		if err := checkDependency("helm"); err != nil {
-			return err
-		}
-
-		args := []string{
-			"upgrade",
-			"--install",
-			environment.Helm.Release,
-			environment.Helm.Chart,
-			"--namespace",
-			environment.K8s.Namespace,
-		}
-
-		// inject kube-context if provided
-		if environment.K8s.Context != "" {
-			args = append(args, "--kube-context", environment.K8s.Context)
-		}
-
-		return executor.Run("helm", args...)
-
-	case StrategyKubectl:
-
-		if err := checkDependency("kubectl"); err != nil {
-			return err
-		}
-
-		args := []string{
-			"apply",
-			"-f",
-			"k8s/",
-			"-n",
-			environment.K8s.Namespace,
-		}
-
-		if environment.K8s.Context != "" {
-			args = append(args, "--context", environment.K8s.Context)
-		}
-
-		return executor.Run("kubectl", args...)
-
-	default:
-		return fmt.Errorf("unknown deployment strategy")
-	}
+	return executor.Run(command.Name, command.Args...)
 }
