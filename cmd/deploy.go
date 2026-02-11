@@ -14,7 +14,12 @@ var (
 
 var deployCmd = &cobra.Command{
 	Use:   "deploy",
-	Short: "Deploy an application using the configured environment",
+	Short: "Deployment operations",
+}
+
+var deployRunCmd = &cobra.Command{
+	Use:   "run",
+	Short: "Execute deployment",
 	Run: func(cmd *cobra.Command, args []string) {
 
 		if deployEnv == "" {
@@ -28,10 +33,31 @@ var deployCmd = &cobra.Command{
 	},
 }
 
+var deployPlanCmd = &cobra.Command{
+	Use:   "plan",
+	Short: "Preview deployment execution plan",
+	Run: func(cmd *cobra.Command, args []string) {
+
+		if deployEnv == "" {
+			fmt.Println("please provide --env")
+			return
+		}
+
+		if err := deploy.Plan(deployEnv); err != nil {
+			fmt.Println("plan error:", err)
+		}
+	},
+}
+
 func init() {
 
-	deployCmd.Flags().StringVar(&deployEnv, "env", "", "Environment to deploy")
-	deployCmd.Flags().BoolVar(&dryRun, "dry-run", false, "Preview deployment")
+	deployRunCmd.Flags().StringVar(&deployEnv, "env", "", "Environment to deploy")
+	deployRunCmd.Flags().BoolVar(&dryRun, "dry-run", false, "Preview deployment")
+
+	deployPlanCmd.Flags().StringVar(&deployEnv, "env", "", "Environment to plan")
+
+	deployCmd.AddCommand(deployRunCmd)
+	deployCmd.AddCommand(deployPlanCmd)
 
 	rootCmd.AddCommand(deployCmd)
 }
