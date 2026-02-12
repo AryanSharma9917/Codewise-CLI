@@ -1,19 +1,6 @@
 package deploy
 
-import (
-	"fmt"
-	"os/exec"
-)
-
-func checkDependency(name string) error {
-
-	_, err := exec.LookPath(name)
-	if err != nil {
-		return fmt.Errorf("%s not found in PATH. please install it to continue", name)
-	}
-
-	return nil
-}
+import "fmt"
 
 func Run(envName string, dryRun bool) error {
 
@@ -22,18 +9,24 @@ func Run(envName string, dryRun bool) error {
 		return err
 	}
 
-	command, _, err := BuildCommand(environment)
-	if err != nil {
+	////////////////////////////////////////////////////
+	// PREFLIGHT FIRST
+	////////////////////////////////////////////////////
+
+	if err := Preflight(environment); err != nil {
 		return err
 	}
 
-	if err := checkDependency(command.Name); err != nil {
+	command, _, err := BuildCommand(environment)
+	if err != nil {
 		return err
 	}
 
 	executor := Executor{
 		DryRun: dryRun,
 	}
+
+	fmt.Println("Starting deployment...")
 
 	return executor.Run(command.Name, command.Args...)
 }
