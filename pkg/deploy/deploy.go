@@ -36,5 +36,21 @@ func Run(envName string, dryRun bool) error {
 
 	fmt.Println("Starting deployment...")
 
-	return executor.Run(command.Name, command.Args...)
+	if err := executor.Run(command.Name, command.Args...); err != nil {
+		return err
+	}
+
+	////////////////////////////////////
+	// SKIP ROLLOUT FOR DRY RUN
+	////////////////////////////////////
+
+	if dryRun {
+		return nil
+	}
+
+	////////////////////////////////////
+	// MONITOR ROLLOUT
+	////////////////////////////////////
+
+	return MonitorRollout(environment)
 }
