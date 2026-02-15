@@ -9,18 +9,12 @@ func Run(envName string, dryRun bool) error {
 		return err
 	}
 
-	////////////////////////////////////
 	// PREFLIGHT
-	////////////////////////////////////
-
 	if err := Preflight(environment); err != nil {
 		return err
 	}
 
-	////////////////////////////////////
 	// ENSURE NAMESPACE
-	////////////////////////////////////
-
 	if err := EnsureNamespace(environment); err != nil {
 		return err
 	}
@@ -40,17 +34,18 @@ func Run(envName string, dryRun bool) error {
 		return err
 	}
 
-	////////////////////////////////////
-	// SKIP ROLLOUT FOR DRY RUN
-	////////////////////////////////////
-
 	if dryRun {
 		return nil
 	}
 
-	////////////////////////////////////
 	// MONITOR ROLLOUT
-	////////////////////////////////////
+	if err := MonitorRollout(environment); err != nil {
 
-	return MonitorRollout(environment)
+		// fetch diagnostics on failure
+		FetchDiagnostics(environment)
+
+		return err
+	}
+
+	return nil
 }
