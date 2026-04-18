@@ -13,8 +13,8 @@ var (
 
 const (
 	CLI_VERSION = "1.7.0"
-	OWNER       = "AryanSharma"
-	REPO        = "codewise-cli"
+	OWNER       = "AryanSharma9917"
+	REPO        = "Codewise-CLI"
 )
 
 // versionCmd represents the version command
@@ -57,6 +57,8 @@ func checkForNewVersion() {
 }
 
 func init() {
+	rootCmd.AddCommand(versionCmd)
+
 	// Flags for the version command
 	versionCmd.Flags().BoolVarP(&checkLatest, "latest", "l", false, "Check if the latest version is installed")
 }

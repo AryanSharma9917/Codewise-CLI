@@ -162,18 +162,23 @@ helm/chart/
 Usage:
 
 ```bash
-codewise encode --input file --output out --type <mode>
+codewise encode --input file --output out [flags]
 ```
 
-Supported modes:
+Common conversions:
 
-| mode   | description   |
-| ------ | ------------- |
-| `JTY`  | JSON → YAML   |
-| `YTJ`  | YAML → JSON   |
-| `KVTJ` | .env → JSON   |
-| `B64E` | Base64 encode |
-| `B64D` | Base64 decode |
+| command example | description |
+| --------------- | ----------- |
+| `codewise encode -i app.json -o app.yaml --json-to-yaml` | JSON → YAML |
+| `codewise encode -i app.yaml -o app.json` | YAML → JSON (default path) |
+| `codewise encode -i .env -o env.json --env-to-json` | .env → JSON |
+| `codewise encode -i input.txt -o encoded.txt --base64` | Base64 encode |
+| `codewise encode -i encoded.txt -o output.txt --base64 --decode` | Base64 decode |
+
+Additional auto-detected conversions are supported from file extensions:
+
+- TOML ⇄ JSON
+- XML ⇄ JSON
 
 ---
 

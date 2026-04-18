@@ -28,7 +28,7 @@ A powerful platform-style CLI for DevOps workflows including:
 
 		_ = cmd.Help()
 	},
-	Version: "v1.1.0",
+	Version: CLI_VERSION,
 }
 
 // Execute runs the root command.
