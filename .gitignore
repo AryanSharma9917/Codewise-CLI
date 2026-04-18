@@ -1,6 +1,4 @@
-# -----------------------------
 # Go / Build / Binary files
-# -----------------------------
 *.o
 *.a
 *.so
@@ -15,9 +13,7 @@ cobra.test
 bin/
 dist/
 
-# -----------------------------
 # Project specific / temporary
-# -----------------------------
 output.json
 output.yaml
 output.xml
@@ -31,9 +27,7 @@ config.yaml
 # pkg/prompt folder (included for interactive prompts)
 # pkg/prompt/   <- commented out so files are tracked
 
-# -----------------------------
 # IDE / Editor
-# -----------------------------
 .idea/
 .vscode/
 *.iml
@@ -42,20 +36,12 @@ Session.vim
 .netrwhist
 *~
 
-# -----------------------------
-# Other generated files / folders
-# -----------------------------
+# Generated binaries and build outputs
 codewise-cli
 myapp/
 myapp/codewise
 codewise
 myappcodewise-cli
-codewise-cli
-JTY_output.yaml
-KVTJ_output.json
-YTJ_output.json
 
-# -----------------------------
 # Environment files
-# -----------------------------
 .env
