@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 
 	"github.com/aryansharma9917/codewise-cli/pkg/k8s"
 	"github.com/spf13/cobra"
@@ -16,23 +15,16 @@ var (
 var k8sApplyCmd = &cobra.Command{
 	Use:   "apply",
 	Short: "Apply Kubernetes manifests to the current cluster",
-	Run: func(cmd *cobra.Command, args []string) {
-		// If not a dry run, check cluster connectivity
+	RunE: func(cmd *cobra.Command, args []string) error {
 		if !k8sDryRun {
 			if err := k8s.CheckKubectl(); err != nil {
-				fmt.Println("info:", err.Error())
-				return
+				return LogError(err.Error())
 			}
 			if err := k8s.CheckCluster(); err != nil {
-				fmt.Println("info:", err.Error())
-				return
+				return LogError(err.Error())
 			}
 		}
-
-		if err := k8s.ApplyManifests(k8sNamespace, k8sContext, k8sDryRun); err != nil {
-			fmt.Println("info:", err.Error())
-			return
-		}
+		return k8s.ApplyManifests(k8sNamespace, k8sContext, k8sDryRun)
 	},
 }
 

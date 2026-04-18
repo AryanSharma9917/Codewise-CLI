@@ -15,23 +15,22 @@ var envCreateCmd = &cobra.Command{
 	Use:   "create <name>",
 	Short: "Create a new environment",
 	Args:  cobra.ExactArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		name := args[0]
 
 		if interactive {
 			if err := createEnvInteractive(name); err != nil {
-				fmt.Println("error:", err)
-				return
+				return LogError("error: %v", err)
 			}
-			fmt.Println("environment", name, "created")
-			return
+			LogSuccess("environment %s created", name)
+			return nil
 		}
 
 		if err := env.CreateEnv(name, env.CreateOptions{}); err != nil {
-			fmt.Println("error:", err)
-			return
+			return LogError("error: %v", err)
 		}
-		fmt.Println("environment", name, "created")
+		LogSuccess("environment %s created", name)
+		return nil
 	},
 }
 

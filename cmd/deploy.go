@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 
 	"github.com/aryansharma9917/codewise-cli/pkg/deploy"
 	"github.com/spf13/cobra"
@@ -20,32 +19,22 @@ var deployCmd = &cobra.Command{
 var deployRunCmd = &cobra.Command{
 	Use:   "run",
 	Short: "Execute deployment",
-	Run: func(cmd *cobra.Command, args []string) {
-
+	RunE: func(cmd *cobra.Command, args []string) error {
 		if deployEnv == "" {
-			fmt.Println("please provide --env")
-			return
+			return ExitError("please provide --env")
 		}
-
-		if err := deploy.Run(deployEnv, dryRun); err != nil {
-			fmt.Println("deploy error:", err)
-		}
+		return deploy.Run(deployEnv, dryRun)
 	},
 }
 
 var deployPlanCmd = &cobra.Command{
 	Use:   "plan",
 	Short: "Preview deployment execution plan",
-	Run: func(cmd *cobra.Command, args []string) {
-
+	RunE: func(cmd *cobra.Command, args []string) error {
 		if deployEnv == "" {
-			fmt.Println("please provide --env")
-			return
+			return ExitError("please provide --env")
 		}
-
-		if err := deploy.Plan(deployEnv); err != nil {
-			fmt.Println("plan error:", err)
-		}
+		return deploy.Plan(deployEnv)
 	},
 }
 

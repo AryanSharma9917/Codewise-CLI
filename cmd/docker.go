@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 
 	"github.com/aryansharma9917/codewise-cli/pkg/docker"
 	"github.com/spf13/cobra"
@@ -17,32 +16,35 @@ var dockerCmd = &cobra.Command{
 var dockerInitCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Generate a Dockerfile",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		if err := docker.InitDockerfile(); err != nil {
-			fmt.Println("ℹ️", err.Error())
-			return
+			return LogError(err.Error())
 		}
-		fmt.Println("✅ Dockerfile created")
+		LogSuccess("Dockerfile created")
+		return nil
 	},
 }
 
 var dockerValidateCmd = &cobra.Command{
 	Use:   "validate",
 	Short: "Validate Dockerfile best practices",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		if err := docker.ValidateDockerfile(); err != nil {
-			fmt.Println("❌", err.Error())
+			return LogError(err.Error())
 		}
+		return nil
 	},
 }
 
 var dockerBuildCmd = &cobra.Command{
 	Use:   "build",
 	Short: "Build Docker image",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		if err := docker.BuildDockerImage(imageTag); err != nil {
-			fmt.Println("❌ Docker build failed")
+			return LogError("Docker build failed: %v", err)
 		}
+		LogSuccess("Docker image built successfully")
+		return nil
 	},
 }
 

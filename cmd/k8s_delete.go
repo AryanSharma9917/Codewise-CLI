@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 
 	"github.com/aryansharma9917/codewise-cli/pkg/k8s"
 	"github.com/spf13/cobra"
@@ -16,22 +15,16 @@ var (
 var k8sDeleteCmd = &cobra.Command{
 	Use:   "delete",
 	Short: "Delete Kubernetes resources from the current cluster",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		if !k8sDeleteDryRun {
 			if err := k8s.CheckKubectl(); err != nil {
-				fmt.Println("info:", err.Error())
-				return
+				return LogError(err.Error())
 			}
 			if err := k8s.CheckCluster(); err != nil {
-				fmt.Println("info:", err.Error())
-				return
+				return LogError(err.Error())
 			}
 		}
-
-		if err := k8s.DeleteManifests(k8sDeleteNamespace, k8sDeleteContext, k8sDeleteDryRun); err != nil {
-			fmt.Println("info:", err.Error())
-			return
-		}
+		return k8s.DeleteManifests(k8sDeleteNamespace, k8sDeleteContext, k8sDeleteDryRun)
 	},
 }
 

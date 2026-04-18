@@ -14,7 +14,7 @@ var envDeleteCmd = &cobra.Command{
 	Use:   "delete <name>",
 	Short: "Delete an environment",
 	Args:  cobra.ExactArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		name := args[0]
 
 		if !yes {
@@ -23,21 +23,19 @@ var envDeleteCmd = &cobra.Command{
 				Message: fmt.Sprintf("Delete environment %q?", name),
 			}
 			if err := survey.AskOne(prompt, &confirm); err != nil {
-				fmt.Println("error:", err)
-				return
+				return LogError("error: %v", err)
 			}
 			if !confirm {
-				fmt.Println("aborted")
-				return
+				return LogError("aborted")
 			}
 		}
 
 		if err := env.DeleteEnv(name, env.DeleteOptions{Force: yes}); err != nil {
-			fmt.Println("error:", err)
-			return
+			return LogError("error: %v", err)
 		}
 
-		fmt.Println("environment", name, "deleted")
+		LogSuccess("environment %s deleted", name)
+		return nil
 	},
 }
 

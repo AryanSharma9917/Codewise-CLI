@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 
 	"github.com/aryansharma9917/codewise-cli/pkg/k8s"
 	"github.com/spf13/cobra"
@@ -15,18 +14,18 @@ var (
 var k8sInitCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize Kubernetes deployment and service manifests",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		opts := k8s.Options{
 			AppName: k8sInitAppName,
 			Image:   k8sInitImage,
 		}
 
 		if err := k8s.InitK8sManifests(opts); err != nil {
-			fmt.Println("info:", err.Error())
-			return
+			return LogError(err.Error())
 		}
 
-		fmt.Println("k8s manifests created at k8s/app")
+		LogSuccess("k8s manifests created at k8s/app")
+		return nil
 	},
 }
 
