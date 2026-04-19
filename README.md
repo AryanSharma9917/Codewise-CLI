@@ -32,18 +32,20 @@ Clone the repository:
 ```bash
 git clone https://github.com/aryansharma9917/codewise-cli.git
 cd codewise-cli
-````
+```
 
 Build from source:
 
 ```bash
-go build -o codewise main.go
+make build
+# or
+go build -o codewise-cli main.go
 ```
 
 (Optional) install globally:
 
 ```bash
-sudo mv codewise /usr/local/bin/
+sudo mv codewise-cli /usr/local/bin/codewise
 ```
 
 ---
@@ -55,6 +57,21 @@ General syntax:
 ```bash
 codewise <command> [subcommand] [flags]
 ```
+
+Local development usage (without global install):
+
+```bash
+./codewise-cli <command> [subcommand] [flags]
+# or
+go run . <command> [subcommand] [flags]
+```
+
+---
+
+## Documentation
+
+- [Testing runbook](TESTING_RUNBOOK.md) for copy-paste test and smoke commands
+- [Project overview](PROJECT_OVERVIEW.md) for architecture, connectivity, build flow, and tech stack
 
 ---
 
@@ -201,9 +218,11 @@ codewise helm init
 .
 ├── cmd/               # CLI commands
 ├── pkg/               # Core logic (docker, k8s, helm, config, encode)
+├── templates/         # Source templates used by generators
 ├── helm/              # Generated Helm charts
 ├── k8s/               # Generated Kubernetes manifests
-├── config/            # Configuration helpers
+├── tests/             # Automated tests
+├── testdata/          # Fixtures used by tests and conversion checks
 ├── Dockerfile
 ├── go.mod
 └── main.go
