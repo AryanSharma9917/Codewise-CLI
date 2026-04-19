@@ -72,6 +72,7 @@ go run . <command> [subcommand] [flags]
 
 - [Testing runbook](TESTING_RUNBOOK.md) for copy-paste test and smoke commands
 - [Project overview](PROJECT_OVERVIEW.md) for architecture, connectivity, build flow, and tech stack
+- [Deployment maturity ladder](DEPLOYMENT_MATURITY.md) for local -> staging -> production readiness criteria
 
 ---
 
