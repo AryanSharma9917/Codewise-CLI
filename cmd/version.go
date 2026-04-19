@@ -12,7 +12,7 @@ var (
 )
 
 const (
-	CLI_VERSION = "1.7.0"
+	CLI_VERSION = "1.8.0"
 	OWNER       = "AryanSharma9917"
 	REPO        = "Codewise-CLI"
 )
