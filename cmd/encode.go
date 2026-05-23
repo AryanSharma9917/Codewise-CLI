@@ -5,9 +5,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/spf13/cobra"
 	"github.com/aryansharma9917/codewise-cli/pkg/encoder"
 	"github.com/aryansharma9917/codewise-cli/pkg/prompt"
+	"github.com/spf13/cobra"
 )
 
 var (

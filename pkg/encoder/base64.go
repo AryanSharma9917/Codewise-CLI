@@ -33,6 +33,5 @@ func Base64Decode(inputFile, outputFile string) error {
 // echo "hello codewise" > input.txt
 // go run main.go encode --base64 --input=input.txt --output=encoded.txt
 
-
 // go run main.go encode --base64 --decode --input=encoded.txt --output=output.txt
 // cat output.txt  # => hello codewise

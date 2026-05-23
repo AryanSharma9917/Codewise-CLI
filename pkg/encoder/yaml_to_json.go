@@ -31,7 +31,6 @@ func YAMLToJSON(inputFile, outputFile string) error {
 	return nil
 }
 
-
 // Example usage:
 // apiVersion: v1
 // kind: Pod
