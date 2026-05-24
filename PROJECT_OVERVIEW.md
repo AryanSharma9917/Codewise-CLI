@@ -80,7 +80,7 @@ Terminal User
 ## Tech Stack
 
 Primary:
-- Go 1.20
+- Go 1.22
 - Cobra CLI framework (`github.com/spf13/cobra`)
 - YAML support (`gopkg.in/yaml.v3`)
 - TOML support (`github.com/BurntSushi/toml`)
