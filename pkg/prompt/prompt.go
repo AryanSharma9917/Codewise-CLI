@@ -13,7 +13,9 @@ func AskInputFile() string {
 	prompt := &survey.Input{
 		Message: "Enter the input file path:",
 	}
-	survey.AskOne(prompt, &path)
+	if err := survey.AskOne(prompt, &path); err != nil {
+		return ""
+	}
 	return path
 }
 
@@ -23,7 +25,9 @@ func AskOutputFile() string {
 	prompt := &survey.Input{
 		Message: "Enter the output file path:",
 	}
-	survey.AskOne(prompt, &path)
+	if err := survey.AskOne(prompt, &path); err != nil {
+		return ""
+	}
 	return path
 }
 
@@ -35,6 +39,8 @@ func ConfirmOverwrite(file string) bool {
 
 	var confirm bool
 	message := fmt.Sprintf("File %s already exists. Overwrite?", file)
-	survey.AskOne(&survey.Confirm{Message: message}, &confirm)
+	if err := survey.AskOne(&survey.Confirm{Message: message}, &confirm); err != nil {
+		return false
+	}
 	return confirm
 }

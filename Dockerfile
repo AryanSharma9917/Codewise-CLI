@@ -1,5 +1,5 @@
 # Stage 1: Build the Go binary
-FROM golang:1.22-alpine AS builder
+FROM golang:1.25-alpine AS builder
 
 # Set the working directory
 WORKDIR /app
@@ -15,7 +15,7 @@ COPY . .
 RUN go build -o codewise main.go
 
 # Stage 2: Minimal runtime image
-FROM alpine:latest
+FROM alpine:3.22
 
 # Create a non-root user for better security (optional)
 RUN adduser -D appuser

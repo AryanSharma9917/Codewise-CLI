@@ -20,14 +20,14 @@ var envCreateCmd = &cobra.Command{
 
 		if interactive {
 			if err := createEnvInteractive(name); err != nil {
-				return LogError("error: %v", err)
+				return LogErrorf("error: %v", err)
 			}
 			LogSuccess("environment %s created", name)
 			return nil
 		}
 
 		if err := env.CreateEnv(name, env.CreateOptions{}); err != nil {
-			return LogError("error: %v", err)
+			return LogErrorf("error: %v", err)
 		}
 		LogSuccess("environment %s created", name)
 		return nil

@@ -19,24 +19,30 @@ var templateCmd = &cobra.Command{
 var githubActionCmd = &cobra.Command{
 	Use:   "github-action",
 	Short: "Generate a GitHub Actions CI workflow",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		data := generator.TemplateData{
 			AppName: appName,
 			Repo:    repoURL,
 		}
-		generator.RenderTemplate("github-action", outputPath, data)
+		if err := generator.RenderTemplate("github-action", outputPath, data); err != nil {
+			return ExitError(err.Error())
+		}
+		return nil
 	},
 }
 
 var argoAppCmd = &cobra.Command{
 	Use:   "argo-app",
 	Short: "Generate an ArgoCD application manifest",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		data := generator.TemplateData{
 			AppName: appName,
 			Repo:    repoURL,
 		}
-		generator.RenderTemplate("argo-app", outputPath, data)
+		if err := generator.RenderTemplate("argo-app", outputPath, data); err != nil {
+			return ExitError(err.Error())
+		}
+		return nil
 	},
 }
 
@@ -52,6 +58,8 @@ func init() {
 		cmd.Flags().StringVarP(&outputPath, "output", "o", "", "Output file path (required)")
 		cmd.Flags().StringVar(&appName, "app-name", "myapp", "Application name for template")
 		cmd.Flags().StringVar(&repoURL, "repo", "https://github.com/example/repo", "Repository URL for template")
-		cmd.MarkFlagRequired("output")
+		if err := cmd.MarkFlagRequired("output"); err != nil {
+			panic(err)
+		}
 	}
 }

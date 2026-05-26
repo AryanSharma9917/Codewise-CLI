@@ -40,7 +40,7 @@ var dockerBuildCmd = &cobra.Command{
 	Short: "Build Docker image",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		if err := docker.BuildDockerImage(imageTag); err != nil {
-			return LogError("Docker build failed: %v", err)
+			return LogErrorf("Docker build failed: %v", err)
 		}
 		LogSuccess("Docker image built successfully")
 		return nil

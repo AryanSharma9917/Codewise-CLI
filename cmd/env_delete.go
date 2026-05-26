@@ -23,7 +23,7 @@ var envDeleteCmd = &cobra.Command{
 				Message: fmt.Sprintf("Delete environment %q?", name),
 			}
 			if err := survey.AskOne(prompt, &confirm); err != nil {
-				return LogError("error: %v", err)
+				return LogErrorf("error: %v", err)
 			}
 			if !confirm {
 				return LogError("aborted")
@@ -31,7 +31,7 @@ var envDeleteCmd = &cobra.Command{
 		}
 
 		if err := env.DeleteEnv(name, env.DeleteOptions{Force: yes}); err != nil {
-			return LogError("error: %v", err)
+			return LogErrorf("error: %v", err)
 		}
 
 		LogSuccess("environment %s deleted", name)
