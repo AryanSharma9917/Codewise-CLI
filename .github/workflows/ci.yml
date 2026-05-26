@@ -31,11 +31,33 @@ jobs:
       - name: Run go vet
         run: go vet ./...
 
-      - name: Run golangci-lint
-        uses: golangci/golangci-lint-action@v4
+      - name: Install golangci-lint
+        run: |
+          mkdir -p ./bin
+          GOBIN=$(pwd)/bin go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+
+      - name: Run golangci-lint (verbose) and save log
+        run: |
+          set +e
+          mkdir -p artifacts
+          ./bin/golangci-lint run ./... --verbose > artifacts/golangci.log 2>&1 || true
+          rc=$?
+          cat artifacts/golangci.log
+          echo $rc > artifacts/golangci_exit
+
+      - name: Upload golangci-lint log
+        uses: actions/upload-artifact@v4
         with:
-          version: latest
-          args: run ./...
+          name: golangci-log
+          path: artifacts/golangci.log
+
+      - name: Fail if golangci-lint reported issues
+        run: |
+          rc=$(cat artifacts/golangci_exit || echo 0)
+          if [ "$rc" != "0" ]; then
+            echo "golangci-lint failed with exit code $rc"
+            exit $rc
+          fi
 
       - name: Tidy modules
         run: go mod tidy
