@@ -40,6 +40,20 @@ func envDir(name string) (string, error) {
 	return filepath.Join(base, name), nil
 }
 
+// EnvDir returns the full path to an environment directory.
+func EnvDir(name string) (string, error) {
+	return envDir(name)
+}
+
+// RemoveEnv deletes an environment directory and its contents.
+func RemoveEnv(name string) error {
+	dir, err := envDir(name)
+	if err != nil {
+		return err
+	}
+	return os.RemoveAll(dir)
+}
+
 func envExists(name string) bool {
 
 	dir, err := envDir(name)
