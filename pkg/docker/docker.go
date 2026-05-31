@@ -99,3 +99,17 @@ func BuildDockerImage(tag string) error {
 	fmt.Println("Running:", strings.Join(cmd.Args, " "))
 	return cmd.Run()
 }
+
+// PushDockerImage runs docker push for the given tag
+func PushDockerImage(tag string) error {
+	if tag == "" {
+		return fmt.Errorf("image tag required for push")
+	}
+
+	cmd := exec.Command("docker", "push", tag)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	fmt.Println("Running:", strings.Join(cmd.Args, " "))
+	return cmd.Run()
+}

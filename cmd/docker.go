@@ -47,6 +47,21 @@ var dockerBuildCmd = &cobra.Command{
 	},
 }
 
+var dockerPushCmd = &cobra.Command{
+	Use:   "push",
+	Short: "Push Docker image to registry",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if imageTag == "" {
+			return ExitError("please provide --tag for the image to push")
+		}
+		if err := docker.PushDockerImage(imageTag); err != nil {
+			return LogErrorf("Docker push failed: %v", err)
+		}
+		LogSuccess("Docker image pushed successfully")
+		return nil
+	},
+}
+
 func init() {
 	dockerBuildCmd.Flags().StringVarP(
 		&imageTag,
@@ -59,6 +74,7 @@ func init() {
 	dockerCmd.AddCommand(dockerInitCmd)
 	dockerCmd.AddCommand(dockerValidateCmd)
 	dockerCmd.AddCommand(dockerBuildCmd)
+	dockerCmd.AddCommand(dockerPushCmd)
 
 	rootCmd.AddCommand(dockerCmd)
 }
