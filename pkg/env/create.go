@@ -5,8 +5,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/aryansharma9917/codewise-cli/pkg/config"
 	survey "github.com/AlecAivazis/survey/v2"
+	"github.com/aryansharma9917/codewise-cli/pkg/config"
 	"gopkg.in/yaml.v3"
 )
 
