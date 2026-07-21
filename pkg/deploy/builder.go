@@ -56,6 +56,23 @@ func BuildCommand(environment *env.Env) (*Command, Strategy, error) {
 			Args: args,
 		}, strategy, nil
 
+	case StrategyGitOps:
+
+		args := []string{
+			"apply",
+			"-f",
+			"-",
+		}
+
+		if environment.K8s.Context != "" {
+			args = append(args, "--context", environment.K8s.Context)
+		}
+
+		return &Command{
+			Name: "kubectl",
+			Args: args,
+		}, strategy, nil
+
 	default:
 		return nil, "", fmt.Errorf("unknown deployment strategy")
 	}

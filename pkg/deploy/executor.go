@@ -2,6 +2,7 @@ package deploy
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"strings"
@@ -9,6 +10,7 @@ import (
 
 type Executor struct {
 	DryRun bool
+	Stdin  io.Reader
 }
 
 func (e *Executor) Run(name string, args ...string) error {
@@ -23,6 +25,10 @@ func (e *Executor) Run(name string, args ...string) error {
 	cmd := exec.Command(name, args...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
+
+	if e.Stdin != nil {
+		cmd.Stdin = e.Stdin
+	}
 
 	fmt.Println("Running:", cmdStr)
 
