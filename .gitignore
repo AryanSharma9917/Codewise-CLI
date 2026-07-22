@@ -45,3 +45,8 @@ myappcodewise-cli
 
 # Environment files
 .env
+
+# Documentation site
+website/node_modules/
+website/.vitepress/cache/
+website/.vitepress/dist/

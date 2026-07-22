@@ -73,6 +73,22 @@ go run . <command> [subcommand] [flags]
 - [Testing runbook](TESTING_RUNBOOK.md) for copy-paste test and smoke commands
 - [Project overview](PROJECT_OVERVIEW.md) for architecture, connectivity, build flow, and tech stack
 - [Deployment maturity ladder](DEPLOYMENT_MATURITY.md) for local -> staging -> production readiness criteria
+- [Documentation website](website/index.md) for the searchable guide, command reference, workflows, and troubleshooting
+
+Run the documentation website locally:
+
+```bash
+cd website
+npm install
+npm run dev
+```
+
+Create and preview a production build:
+
+```bash
+npm run build
+npm run preview
+```
 
 ---
 
@@ -256,4 +272,3 @@ Contributions are welcome. The project follows a logical commit layering:
 * Scaffold output under `k8s/` and `helm/`
 
 Fork, branch, commit, and open a PR.
-

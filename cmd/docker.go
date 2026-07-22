@@ -70,6 +70,13 @@ func init() {
 		"",
 		"Docker image tag (default: codewise:latest)",
 	)
+	dockerPushCmd.Flags().StringVarP(
+		&imageTag,
+		"tag",
+		"t",
+		"",
+		"Docker image tag to push (required)",
+	)
 
 	dockerCmd.AddCommand(dockerInitCmd)
 	dockerCmd.AddCommand(dockerValidateCmd)

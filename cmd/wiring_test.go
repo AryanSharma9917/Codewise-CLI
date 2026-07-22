@@ -37,3 +37,19 @@ func TestK8sInitCommandIsRegistered(t *testing.T) {
 		t.Fatalf("expected k8s init subcommand to be registered")
 	}
 }
+
+func TestDockerPushTagFlagIsRegistered(t *testing.T) {
+	docker := findCommandByName(rootCmd, "docker")
+	if docker == nil {
+		t.Fatalf("expected docker command to be registered on root")
+	}
+
+	push := findCommandByName(docker, "push")
+	if push == nil {
+		t.Fatalf("expected docker push subcommand to be registered")
+	}
+
+	if got := push.Flags().Lookup("tag"); got == nil {
+		t.Fatalf("expected docker push to register the --tag flag")
+	}
+}
